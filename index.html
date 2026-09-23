@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nûr Retreats — Business model v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2B2622;--terra:#B4552F;--terra-l:#E9C9B8;--sand:#EFE6D6;--sand2:#F7F2EA;--line:#E2D6C3;--blue:#2a78d6;--violet:#4a3aa7;--gold:#B8912F;--muted:#6f655c;--ok:#2e7d4f;--bad:#b3261e;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:13px;color:var(--ink);background:var(--sand2)}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;margin:0}
+.top{background:var(--ink);color:#fff;padding:10px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:10}
+.logo{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#F3C98B 0 30%,#B4552F 31% 55%,transparent 56%);border:1px solid #F3C98B}
+.top h1{font-size:22px;color:#fff}
+.top .sub{color:#d9cdbd;font-size:12px}
+.top .sp{flex:1}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600;letter-spacing:.03em}
+.b-proto{background:#F3C98B;color:var(--ink)}
+.b-local{background:#4b433c;color:#fff}
+.btn{background:transparent;border:1px solid #8a7e72;color:#fff;border-radius:6px;padding:5px 10px;cursor:pointer;font:inherit;font-size:12px}
+.btn.l{border-color:var(--line);color:var(--ink);background:#fff}
+.btn.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.banner{background:#FFF4E0;border-bottom:1px solid #EBD3A6;padding:8px 20px;font-size:12px}
+.scen{padding:10px 20px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;background:var(--sand);border-bottom:1px solid var(--line)}
+.chip{border:1px solid var(--line);background:#fff;border-radius:14px;padding:4px 11px;cursor:pointer;font-size:12px}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.scen .desc{color:var(--muted);font-size:12px;margin-left:6px}
+.tabs{display:flex;gap:2px;padding:0 20px;background:var(--sand);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;font-weight:500}
+.tab.on{border-color:var(--terra);color:var(--terra)}
+main{padding:18px 20px 40px;max-width:1320px;margin:0 auto}
+.grid{display:grid;gap:12px}
+.k8{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.kpi .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.kpi .v{font-family:"Cormorant Garamond",Georgia,serif;font-size:26px;font-weight:600;margin-top:4px}
+.kpi .s{font-size:11px;color:var(--muted);margin-top:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:14px}
+.card h2{font-size:20px;margin-bottom:8px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th{background:var(--sand);text-align:left;padding:6px;border-bottom:1px solid var(--line);position:sticky;top:0}
+td{padding:5px 6px;border-bottom:1px solid #f0e8dc}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.tot td{font-weight:600;background:var(--sand2)}
+.neg{color:var(--bad)}
+.low{background:#fbe3e0}
+.scroll{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.tag{display:inline-block;font-size:10px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:600}
+.tF{background:#e3efe7;color:#1f5e3a}.tD{background:#e4e3f5;color:#3b2f8f}.tH{background:#fbecd9;color:#8a4b12}.tC{background:#e8eef7;color:#1d4f8f}
+.hyp{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.hyp .card{margin-top:0}
+.f{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dashed #efe6d8;gap:8px}
+.f label{flex:1}
+.f input{width:96px;text-align:right;border:1px solid var(--line);border-radius:5px;padding:3px 5px;font:inherit}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:4px 0 6px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.note{font-size:11px;color:var(--muted)}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;padding:6px 8px;border-radius:6px;font-size:11px;display:none;z-index:50;max-width:260px}
+.pill{display:inline-block;padding:2px 7px;border-radius:9px;background:var(--sand);font-size:11px}
+.subtabs{display:flex;gap:6px;margin-bottom:10px}
+.stab{padding:7px 14px;border:1px solid var(--line);border-radius:18px;background:#fff;cursor:pointer;font-weight:500}
+.stab.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.sync .syncrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.sync #ep{flex:1;min-width:220px;border:1px solid var(--line);border-radius:6px;padding:5px 8px;font:inherit}
+.b-sheet{background:#2e7d4f;color:#fff}.b-sand{background:#B8912F;color:#fff}
+.src{font-size:10px;color:var(--muted);margin-left:6px}
+.unit{width:34px;font-size:11px;color:var(--muted)}
+.lab[contenteditable]{background:#fff8e6;outline:1px dashed #B8912F;padding:0 2px}
+.sub{font-weight:600;margin:10px 0 4px;font-size:12px}
+.ramp{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.ramp label{font-size:11px;color:var(--muted);display:flex;flex-direction:column}
+.ramp input{width:100%;text-align:right;border:1px solid var(--line);border-radius:5px;padding:3px}
+input.mini{width:62px;text-align:right;border:1px solid var(--line);border-radius:5px;padding:2px 4px;font:inherit}
+input.lbl{width:260px;border:1px dashed var(--line);border-radius:5px;padding:2px 4px;font:inherit}
+.teambar{display:flex;gap:6px;margin:10px 0}
+table.team tr.grp td{background:var(--sand2);font-weight:600;cursor:pointer}
+.tog{display:inline-block;width:18px;height:18px;line-height:16px;text-align:center;border:1px solid var(--terra);color:var(--terra);border-radius:4px;margin-right:4px;font-weight:700}
+footer{color:var(--muted);font-size:11px;text-align:center;padding:20px}
+@media print{.top{position:static}.scen,.tabs,.btn{display:none}.sec{display:block!important;page-break-after:always}.scroll{max-height:none}}
+.b-cache{background:#6d8fb3;color:#fff}.b-off{background:var(--bad);color:#fff}
+.warn{background:#fbe3e0;border:1px solid #e9b1aa;color:#6e1a14;border-radius:8px;padding:9px 12px;margin:10px 0;font-size:12px}
+.okb{background:#e3efe7;border-bottom:1px solid #b9d7c3;color:#1f5e3a;padding:6px 20px;font-size:12px}
+.kob{background:#fbe3e0;border-bottom:1px solid #e9b1aa;color:#6e1a14;padding:6px 20px;font-size:12px}
+.f input.chg,input.mini.chg,.lbl.chg{background:#fff4d6;border-color:#B8912F}
+.f input[type=checkbox]{width:auto}
+.oysel{display:flex;gap:6px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.hlive{display:flex;gap:16px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:12px}
+.hlive b{font-family:"Cormorant Garamond",Georgia,serif;font-size:18px}
+.ccheck{background:var(--sand2);border-radius:6px;padding:6px 8px;margin-top:6px;font-size:11px}
+.mt{margin-top:8px}.r{text-align:right}.muted{color:var(--muted)}
+svg text{font-family:Inter,Arial,sans-serif}
+.cal rect.d:hover{stroke:#2B2622;stroke-width:1}
+.inv .inv-hide{display:none!important}
+.sec{display:block}
+table.pl td:first-child{white-space:nowrap}
+tr.h1 td{font-weight:600}
+tr.sep td{border-top:2px solid var(--line)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.heat td{text-align:center;font-size:11px;padding:4px}
+.bar{height:8px;background:var(--terra);border-radius:4px}
+.printhead{display:none}
+@media print{@page{size:A4 landscape;margin:10mm}.printhead{display:block;font-size:11px;margin-bottom:6px}.sync,.teambar,.hlive button{display:none}body{background:#fff}.card,.kpi{break-inside:avoid}tr{break-inside:avoid}}
+
+</style></head><body>
+<div class="top" id="hdr"></div><div id="banners"></div><div class="scen" id="scen"></div><div class="tabs" id="tabs"></div>
+<main id="main"></main>
+<footer>Nûr Retreats at Villa Dija · Business model v2 · build 2026-09-23_18h00 · Markarian Realty SARL · Hypothèses de départ non validées (H) — Google Sheet = source de vérité.</footer>
+<div id="tip"></div>
+<script>
+/* Nûr Retreats — Business model v2 engine (ES5). Day-level, 5 operating years.
+   Same rules as the Google Sheet tabs v2_* (formula parity, see README). */
+(function (root) {
+  var DAY = 86400000;
+  function pd(s) { if (s instanceof Date) return s; var p = String(s).slice(0, 10).split("-"); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); }
+  function iso(d) { return d.toISOString().slice(0, 10); }
+  function addD(d, n) { return new Date(d.getTime() + n * DAY); }
+  function edate(d, m) { var y = d.getUTCFullYear(), mo = d.getUTCMonth() + m, dd = d.getUTCDate();
+    var ny = y + Math.floor(mo / 12), nm = ((mo % 12) + 12) % 12, last = new Date(Date.UTC(ny, nm + 1, 0)).getUTCDate();
+    return new Date(Date.UTC(ny, nm, Math.min(dd, last))); }
+  function r9(x) { return Math.round(x * 1e9) / 1e9; }
+  function rnd0(x) { return Math.floor(r9(x) + 0.5); }
+  function dayIdx(open, d) { return Math.round((d.getTime() - open.getTime()) / DAY); }
+
+  /* model = {p:{key:value}, t:{ramp,seasons,holidays,channels,extras,roster,segments}} */
+  function compute(model, opt) {
+    opt = opt || {};
+    var P = model.p, T = model.t, i, j, N = 364 * 5;
+    var open = pd(P.open_date), rooms = P.rooms_deluxe + P.rooms_suite;
+    var hol = {}; for (i = 0; i < T.holidays.length; i++) hol[String(T.holidays[i].date).slice(0, 10)] = 1;
+    var seaByM = {}; for (i = 0; i < T.seasons.length; i++) seaByM[T.seasons[i].m] = T.seasons[i].season;
+    var sfo = { low: P.sf_occ_low, mid: P.sf_occ_mid, high: P.sf_occ_high }, sfp = { low: P.sf_price_low, mid: P.sf_price_mid, high: P.sf_price_high };
+    var blended = P.card_share * P.card_fee; for (i = 0; i < T.channels.length; i++) blended += T.channels[i].share * T.channels[i].commission;
+    var gpr = 2 - P.solo_share;
+    var payBase = 0; for (i = 0; i < T.roster.length; i++) payBase += (+T.roster[i].fte || 0) * (+T.roster[i].gross || 0);
+    var attTher = 0, attVeh = 0;
+    for (i = 0; i < T.extras.length; i++) { if (T.extras[i].resource === "therapist") attTher += T.extras[i].attach; if (T.extras[i].resource === "vehicle") attVeh += T.extras[i].attach; }
+    // debt events
+    var debt = [], bal = P.loan_principal, q;
+    var drw = pd(P.loan_drawdown);
+    for (q = 1; q <= P.loan_grace_quarters; q++) debt.push({ date: edate(drw, 3 * q), interest: P.loan_principal * P.loan_rate / 4, principal: 0, kind: "grace" });
+    var ann = P.loan_principal * P.loan_rate / (1 - Math.pow(1 + P.loan_rate, -P.loan_years));
+    for (q = 1; q <= P.loan_years; q++) { var it = bal * P.loan_rate, pr = ann - it; debt.push({ date: edate(drw, 3 * P.loan_grace_quarters + 12 * q), interest: it, principal: pr, kind: "annuity", balanceBefore: bal }); bal -= pr; }
+    var dInt = new Array(N), dPrin = new Array(N);
+    for (i = 0; i < N; i++) { dInt[i] = 0; dPrin[i] = 0; }
+    for (q = 0; q < debt.length; q++) { var k = dayIdx(open, debt[q].date); debt[q].dayIndex = k; if (k >= 0 && k < N) { dInt[k] += debt[q].interest; dPrin[k] += debt[q].principal; } }
+
+    var C = ["date","dow","type","season","closed","oy","mo","idx","occ","cum","rn","suite","guests","stays","guestStays","pp","pkgTTC","exTTC","exCost","lostEx","pkgHT","exHT","fees","varCost","sessions","dep","bal","depRec","rec","vatOut","payroll","opex","mkt","ins","tax","ffe","capex","freelance","eligible","vatPay","dInt","dPrin","isPay","pay","close","week"];
+    var D = {}; for (j = 0; j < C.length; j++) D[C[j]] = new Array(N);
+    var COMP = [], cumPrev = 0, y0 = open.getUTCFullYear(), m0 = open.getUTCMonth();
+    for (i = 0; i < N; i++) {
+      var d = addD(open, i), dow = d.getUTCDay(), m = d.getUTCMonth() + 1, dom = d.getUTCDate(), h = !!hol[iso(d)];
+      var we = (dow === 5 || dow === 6), type = h ? "hol" : (we ? "we" : "wd");
+      var season = h ? "high" : (m === 12 ? (dom >= P.dec_high_from_day ? "high" : "low") : seaByM[m]);
+      var closed = (m === P.closure_month && dom >= P.closure_start_day && dom < P.closure_start_day + P.closure_days) ? 1 : 0;
+      var oy = Math.floor(i / 364) + 1, mo = (d.getUTCFullYear() - y0) * 12 + (d.getUTCMonth() - m0);
+      var idx = Math.pow(1 + P.indexation, oy - 1), wk = Math.floor(i / 7);
+      var ramp = oy === 1 ? T.ramp[Math.min(mo, 11)].value : (oy === 2 ? P.ramp_oy2 : P.ramp_oy3);
+      var base = type === "hol" ? P.occ_holiday : (type === "we" ? P.occ_weekend : P.occ_weekday);
+      var wf = (P.women_days === 1 && (dow === 2 || dow === 3)) ? P.women_eligible : 1;
+      var absent = (P.absence_weeks > 0 && wk + 1 >= P.absence_start_week && wk + 1 < P.absence_start_week + P.absence_weeks);
+      var af = absent ? (1 - P.absence_demand_cut) : 1;
+      var occ = closed ? 0 : Math.min(1, base * sfo[season] * ramp * wf * af);
+      var cum = cumPrev + rooms * occ, rn = rnd0(cum) - rnd0(cumPrev); cumPrev = cum;
+      var suite = rn * P.suite_share, guests = rn * gpr;
+      var alos = type === "wd" ? P.alos_weekday : P.alos_weekend, stays = rn / alos, gs = stays * gpr;
+      var pp = (type === "wd" ? P.price_weekday_pp : P.price_weekend_pp) * sfp[season] * idx;
+      var fac = 1 - ((i < P.launch_days ? P.launch_discount : 0) + P.los_discount_eff);
+      var pkg = (rn * ((1 - P.solo_share) * 2 * pp + P.solo_share * pp * (1 + P.solo_supplement)) + suite * P.suite_supplement * idx) * fac;
+      var dT = gs * attTher, dV = gs * attVeh;
+      var rT = dT > P.treatment_slots_day ? P.treatment_slots_day / dT : 1, rV = dV > P.vehicle_trips_day ? P.vehicle_trips_day / dV : 1;
+      var ex = 0, exc = 0, lost = 0;
+      for (j = 0; j < T.extras.length; j++) { var x = T.extras[j], rr = x.resource === "therapist" ? rT : (x.resource === "vehicle" ? rV : 1);
+        ex += gs * x.attach * x.price * idx * rr; exc += gs * x.attach * x.cost * idx * rr; lost += gs * x.attach * x.price * idx * (1 - rr); }
+      var tech = 1 + P.tech_uplift;
+      var varC = (guests * (P.fb_guest_night + P.amenities_guest_night) + gs * P.welcome_kit + rn * P.linen_room_night + stays * P.linen_stay + rn * P.energy_room_night * tech) * idx + exc;
+      var eom = addD(d, 1).getUTCDate() === 1;
+      var inSeas = (m >= P.seasonal_from && m <= P.seasonal_to) ? 1 : 0;
+      var payroll = eom ? (payBase * (1 + P.employer_rate) * (1 + P.leave_cover) + inSeas * P.seasonal_monthly * (1 + P.employer_rate)) * idx : 0;
+      var opex = dom === 10 ? ((P.utilities_m + P.maintenance_m) * tech + P.software_m + P.admin_m) * idx : 0;
+      var mkt = ((dom === 1 || i === 0) ? P.marketing_y / 12 * idx : 0) + (i === 0 ? P.launch_marketing : 0);
+      var ins = (i % 364 === 7) ? P.insurance_y * idx : 0, tax = (i % 364 === 63) ? P.taxes_y * idx : 0;
+      var pkgHT = pkg / (1 + P.vat_package), exHT = ex / (1 + P.vat_extras);
+      var ffe = oy >= 2 ? P.ffe_reserve * (pkgHT + exHT) : 0;
+      var capex = (dom === 1 ? ((mo + 1 === P.capex_p2_month ? P.capex_p2 : 0) + (mo + 1 === P.capex_p3_month ? P.capex_p3 : 0)) : 0);
+      var dep = pkg * P.deposit_pct;
+      D.date[i] = iso(d); D.dow[i] = dow; D.type[i] = type; D.season[i] = season; D.closed[i] = closed; D.oy[i] = oy; D.mo[i] = mo; D.idx[i] = idx;
+      D.occ[i] = occ; D.cum[i] = cum; D.rn[i] = rn; D.suite[i] = suite; D.guests[i] = guests; D.stays[i] = stays; D.guestStays[i] = gs; D.pp[i] = pp;
+      D.pkgTTC[i] = pkg; D.exTTC[i] = ex; D.exCost[i] = exc; D.lostEx[i] = lost; D.pkgHT[i] = pkgHT; D.exHT[i] = exHT;
+      D.fees[i] = (pkg + ex) * blended; D.varCost[i] = varC; D.sessions[i] = guests > 0 ? P.sessions_per_day : 0;
+      D.dep[i] = dep; D.bal[i] = pkg - dep + ex;
+      D.payroll[i] = payroll; D.opex[i] = opex; D.mkt[i] = mkt; D.ins[i] = ins; D.tax[i] = tax; D.ffe[i] = ffe; D.capex[i] = capex;
+      D.dInt[i] = dInt[i]; D.dPrin[i] = dPrin[i]; D.week[i] = wk + 1;
+      COMP.push({ solo: rn * P.solo_share * pp * P.solo_supplement * fac, suiteR: suite * P.suite_supplement * idx * fac,
+        fb: guests * P.fb_guest_night * idx, amen: guests * P.amenities_guest_night * idx, kit: gs * P.welcome_kit * idx, lrn: rn * P.linen_room_night * idx, lst: stays * P.linen_stay * idx, en: rn * P.energy_room_night * tech * idx,
+        rT: rT, rV: rV, dT: dT, dV: dV, gs: gs, idx: idx });
+    }
+    // deposits received lead days before arrival (before opening -> day 0)
+    var L = P.lead_days;
+    for (i = 0; i < N; i++) {
+      var dr = 0;
+      if (i === 0) { for (j = 0; j <= Math.min(L, N - 1); j++) dr += D.dep[j]; } else if (i + L < N) dr = D.dep[i + L];
+      D.depRec[i] = dr; D.rec[i] = D.bal[i] + dr;
+      D.vatOut[i] = (D.rec[i] - D.exTTC[i]) * P.vat_package / (1 + P.vat_package) + D.exTTC[i] * P.vat_extras / (1 + P.vat_extras);
+    }
+    // freelance sessions, weekly, paid on the last day of the week
+    for (i = 0; i < N; i++) D.freelance[i] = 0;
+    var nW = N / 7;
+    for (var w = 0; w < nW; w++) {
+      var s = 0; for (j = 0; j < 7; j++) s += D.sessions[7 * w + j];
+      var li = 7 * w + 6, absW = (P.absence_weeks > 0 && w + 1 >= P.absence_start_week && w + 1 < P.absence_start_week + P.absence_weeks);
+      D.freelance[li] = Math.max(0, s - P.lead_sessions_week) * P.freelance_fee * D.idx[li] * (absW ? 1 + P.absence_premium : 1);
+    }
+    for (i = 0; i < N; i++) D.eligible[i] = (D.varCost[i] + D.opex[i] + D.mkt[i]);
+    // VAT: monthly, paid on the 18th of the following month
+    var months = [], mIndex = {}, mk, dd;
+    for (i = 0; i < N; i++) { dd = pd(D.date[i]); mk = dd.getUTCFullYear() * 12 + dd.getUTCMonth();
+      if (mIndex[mk] === undefined) { mIndex[mk] = months.length; months.push({ key: mk, y: dd.getUTCFullYear(), m: dd.getUTCMonth() + 1, vatOut: 0, eligible: 0, revHT: 0, ebitdaItems: 0 }); }
+      var M = months[mIndex[mk]]; M.vatOut += D.vatOut[i]; M.eligible += D.eligible[i]; }
+    var credit = 0;
+    for (i = 0; i < N; i++) D.vatPay[i] = 0;
+    for (j = 0; j < months.length; j++) { var MM = months[j]; MM.deductible = P.input_vat * MM.eligible; MM.net = MM.vatOut - MM.deductible;
+      var pos = MM.net + credit; MM.pay = Math.max(0, pos); credit = Math.min(0, pos); MM.creditAfter = credit;
+      MM.payDate = iso(new Date(Date.UTC(MM.y, MM.m, 18))); var pi = dayIdx(open, pd(MM.payDate)); MM.payIndex = pi;
+      if (pi >= 0 && pi < N) D.vatPay[pi] += MM.pay; }
+    // operating years P&L and IS
+    var OY = [], lossCF = 0, y;
+    for (y = 1; y <= 5; y++) OY.push({ oy: y, rn: 0, guests: 0, stays: 0, pkgTTC: 0, exTTC: 0, pkgHT: 0, exHT: 0, fees: 0, varCost: 0, freelance: 0, payroll: 0, opex: 0, mkt: 0, ins: 0, tax: 0, ffe: 0, capex: 0, interest: 0, principal: 0, rec: 0, lostEx: 0, sessions: 0, rnWd: 0, rnWe: 0, capWd: 0, capWe: 0, openDays: 0, soloRev: 0, suiteRev: 0, cFb: 0, cAmen: 0, cKit: 0, cLinenRN: 0, cLinenStay: 0, cEnergy: 0, exCost: 0, exItemsRev: [], exItemsCost: [], exItemsQty: [], maxTherDemand: 0, daysTherBind: 0, daysVehBind: 0, leadSessions: 0 });
+    for (i = 0; i < N; i++) { var o = OY[D.oy[i] - 1];
+      o.rn += D.rn[i]; o.guests += D.guests[i]; o.stays += D.stays[i]; o.pkgTTC += D.pkgTTC[i]; o.exTTC += D.exTTC[i]; o.pkgHT += D.pkgHT[i]; o.exHT += D.exHT[i];
+      o.fees += D.fees[i]; o.varCost += D.varCost[i]; o.freelance += D.freelance[i]; o.payroll += D.payroll[i]; o.opex += D.opex[i]; o.mkt += D.mkt[i];
+      o.ins += D.ins[i]; o.tax += D.tax[i]; o.ffe += D.ffe[i]; o.capex += D.capex[i]; o.interest += D.dInt[i]; o.principal += D.dPrin[i]; o.rec += D.rec[i]; o.lostEx += D.lostEx[i]; o.sessions += D.sessions[i];
+      if (D.type[i] === "wd") { o.rnWd += D.rn[i]; o.capWd += rooms; } else { o.rnWe += D.rn[i]; o.capWe += rooms; }
+      if (!D.closed[i]) o.openDays++;
+      var cp = COMP[i]; o.soloRev += cp.solo; o.suiteRev += cp.suiteR; o.cFb += cp.fb; o.cAmen += cp.amen; o.cKit += cp.kit; o.cLinenRN += cp.lrn; o.cLinenStay += cp.lst; o.cEnergy += cp.en; o.exCost += D.exCost[i];
+      if (cp.dT > o.maxTherDemand) o.maxTherDemand = cp.dT; if (cp.rT < 1) o.daysTherBind++; if (cp.rV < 1) o.daysVehBind++;
+      for (j = 0; j < T.extras.length; j++) { var xx = T.extras[j], r3 = xx.resource === "therapist" ? cp.rT : (xx.resource === "vehicle" ? cp.rV : 1);
+        o.exItemsQty[j] = (o.exItemsQty[j] || 0) + cp.gs * xx.attach * r3; o.exItemsRev[j] = (o.exItemsRev[j] || 0) + cp.gs * xx.attach * xx.price * cp.idx * r3; o.exItemsCost[j] = (o.exItemsCost[j] || 0) + cp.gs * xx.attach * xx.cost * cp.idx * r3; } }
+    for (var ww = 0; ww < N / 7; ww++) { var ss = 0; for (j = 0; j < 7; j++) ss += D.sessions[7 * ww + j]; OY[Math.floor(ww / 52)].leadSessions += Math.min(ss, P.lead_sessions_week); }
+    for (y = 0; y < 5; y++) { var a = OY[y];
+      a.revHT = a.pkgHT + a.exHT; a.contribution = a.revHT - a.fees - a.varCost - a.freelance;
+      a.fixed = a.payroll + a.opex + a.mkt + a.ins + a.tax + a.ffe; a.ebitda = a.contribution - a.fixed;
+      a.depreciation = P.depreciation_y; a.ebt = a.ebitda - a.depreciation - a.interest;
+      var base2 = Math.max(0, a.ebt - lossCF); lossCF = Math.max(0, lossCF - Math.max(0, a.ebt)) + Math.max(0, -a.ebt);
+      a.lossCFAfter = lossCF; a.is = base2 * P.is_rate; a.net = a.ebt - a.is; a.debtService = a.interest + a.principal;
+      a.occupancy = a.rn / (rooms * 364); a.occWd = a.capWd ? a.rnWd / a.capWd : 0; a.occWe = a.capWe ? a.rnWe / a.capWe : 0;
+      a.adr = a.rn ? a.pkgTTC / a.rn : 0; a.revpar = a.pkgTTC / (rooms * 364); a.trevpar = (a.pkgTTC + a.exTTC) / (rooms * 364);
+      var cpr = a.rn ? a.contribution / a.rn : 0; a.breakEvenOcc = cpr > 0 ? a.fixed / cpr / (rooms * 364) : null;
+      a.contribPerAvailRoom = a.contribution / (rooms * 364); a.contribPerStay = a.stays ? a.contribution / a.stays : 0; }
+    for (i = 0; i < N; i++) D.isPay[i] = 0;
+    for (y = 1; y <= 4; y++) { var ip = 364 * y + 90; if (ip < N) D.isPay[ip] += OY[y - 1].is; }
+    // cash
+    var cl = P.opening_cash;
+    for (i = 0; i < N; i++) {
+      D.pay[i] = D.fees[i] + D.varCost[i] + D.freelance[i] + D.payroll[i] + D.opex[i] + D.mkt[i] + D.ins[i] + D.tax[i] + D.ffe[i] + D.capex[i] + D.vatPay[i] + D.dInt[i] + D.dPrin[i] + D.isPay[i];
+      cl = cl + D.rec[i] - D.pay[i]; D.close[i] = cl; }
+    // weeks
+    var W = [];
+    for (w = 0; w < nW; w++) { var o2 = { week: w + 1, start: D.date[7 * w], rn: 0, rec: 0, depRec: 0, fees: 0, varCost: 0, freelance: 0, payroll: 0, fixed: 0, mkt: 0, vatPay: 0, debt: 0, capex: 0, isPay: 0, pay: 0, holidays: 0, sessions: 0 };
+      for (j = 0; j < 7; j++) { i = 7 * w + j; o2.rn += D.rn[i]; o2.rec += D.rec[i]; o2.depRec += D.depRec[i]; o2.fees += D.fees[i]; o2.varCost += D.varCost[i]; o2.freelance += D.freelance[i];
+        o2.payroll += D.payroll[i]; o2.fixed += D.opex[i] + D.ins[i] + D.tax[i] + D.ffe[i]; o2.mkt += D.mkt[i]; o2.vatPay += D.vatPay[i]; o2.debt += D.dInt[i] + D.dPrin[i];
+        o2.capex += D.capex[i]; o2.isPay += D.isPay[i]; o2.pay += D.pay[i]; if (D.type[i] === "hol") o2.holidays++; o2.sessions += D.sessions[i]; }
+      o2.net = o2.rec - o2.pay; o2.close = D.close[7 * w + 6]; o2.open = o2.close - o2.net; o2.oy = Math.floor(w / 52) + 1; W.push(o2); }
+    // debt service paid and DSCR by OY (IS paid in the OY)
+    for (y = 0; y < 5; y++) { var isPaid = 0; for (i = 364 * y; i < 364 * (y + 1); i++) isPaid += D.isPay[i];
+      OY[y].isPaid = isPaid; OY[y].dscr = OY[y].debtService > 0 ? (OY[y].ebitda - isPaid) / OY[y].debtService : null;
+      OY[y].closeCash = D.close[364 * (y + 1) - 1];
+      var lo = Infinity, loW = 0, below = 0; for (w = 52 * y; w < 52 * (y + 1); w++) { if (W[w].close < lo) { lo = W[w].close; loW = W[w].week; } if (W[w].close < P.cash_buffer) below++; }
+      OY[y].lowCash = lo; OY[y].lowWeek = loW; OY[y].weeksBelow = below; }
+    // calendar years
+    var CY = {}, cys = [];
+    for (i = 0; i < N; i++) { var yy = +D.date[i].slice(0, 4); if (!CY[yy]) { CY[yy] = { year: yy, days: 0, revHT: 0, ebitda: 0, debtService: 0, rec: 0, pay: 0 }; cys.push(yy); }
+      var c = CY[yy]; c.days++; c.revHT += D.pkgHT[i] + D.exHT[i];
+      c.ebitda += D.pkgHT[i] + D.exHT[i] - D.fees[i] - D.varCost[i] - D.freelance[i] - D.payroll[i] - D.opex[i] - D.mkt[i] - D.ins[i] - D.tax[i] - D.ffe[i];
+      c.debtService += D.dInt[i] + D.dPrin[i]; c.closeCash = D.close[i]; }
+    var cal = []; for (i = 0; i < cys.length; i++) cal.push(CY[cys[i]]);
+    // KPIs, control totals, checks
+    var all = { rec: 0, low: Infinity, lowDay: 0 }; for (i = 0; i < N; i++) { all.rec += D.rec[i]; if (D.close[i] < all.low) { all.low = D.close[i]; all.lowDay = i; } }
+    var sumCh = 0; for (i = 0; i < T.channels.length; i++) sumCh += T.channels[i].share;
+    var maxRn = 0; for (i = 0; i < N; i++) if (D.rn[i] > maxRn) maxRn = D.rn[i];
+    var controls = { oy1_revHT_pkg: OY[0].pkgHT, oy1_revHT_ex: OY[0].exHT, oy1_varCost: OY[0].varCost + OY[0].freelance, oy1_payroll: OY[0].payroll, oy1_ebitda: OY[0].ebitda, oy1_net: OY[0].net, oy1_receipts: OY[0].rec, oy1_closeCash: OY[0].closeCash,
+      tot_ebitda: 0, tot_net: 0, low_cash: all.low, close_cash: D.close[N - 1] };
+    for (y = 0; y < 5; y++) { controls.tot_ebitda += OY[y].ebitda; controls.tot_net += OY[y].net; }
+    var checks = { channelsSum: Math.abs(sumCh - 1) < 1e-9, noDoubleSale: maxRn <= rooms, maxRoomsNight: maxRn };
+    return { days: D, weeks: W, months: months, oy: OY, cy: cal, debt: debt, controls: controls, checks: checks, blended: blended, rooms: rooms, N: N, payrollMonthly: payBase * (1 + P.employer_rate) * (1 + P.leave_cover), payBase: payBase, annuity: ann };
+  }
+  function modelFromJSON(j) { var p = {}; for (var i = 0; i < j.rows.length; i++) p[j.rows[i].key] = j.rows[i].value; return { p: p, t: JSON.parse(JSON.stringify(j.tables)) }; }
+  var api = { compute: compute, modelFromJSON: modelFromJSON, pd: pd, iso: iso, edate: edate, addD: addD };
+  if (typeof module !== "undefined" && module.exports) module.exports = api; else root.NurEngine = api;
+})(this);
+
+</script>
+<script>
+var BASE = {"version": "v2.0-sheet-KEF-2026-09-23", "rows": [{"key": "open_date", "page": "ca", "section": "cal", "label_fr": "Date d'ouverture", "label_en": "Opening date", "value": "2027-04-05", "unit": "date", "status": "H", "source": "Brief §15 — à confirmer"}, {"key": "rooms_deluxe", "page": "ca", "section": "cal", "label_fr": "Chambres Deluxe", "label_en": "Deluxe rooms", "value": 4, "unit": "nb", "status": "D", "source": "Brief §3"}, {"key": "rooms_suite", "page": "ca", "section": "cal", "label_fr": "Suite Nûr (VIP)", "label_en": "Nûr Suite (VIP)", "value": 1, "unit": "nb", "status": "D", "source": "Brief §3"}, {"key": "closure_month", "page": "ca", "section": "cal", "label_fr": "Mois de fermeture technique", "label_en": "Technical closure month", "value": 1, "unit": "mois", "status": "H", "source": "Build-prompt §5.1"}, {"key": "closure_start_day", "page": "ca", "section": "cal", "label_fr": "Jour de début de fermeture", "label_en": "Closure start day", "value": 15, "unit": "jour", "status": "H", "source": ""}, {"key": "closure_days", "page": "ca", "section": "cal", "label_fr": "Durée de fermeture", "label_en": "Closure length", "value": 14, "unit": "jours", "status": "H", "source": ""}, {"key": "occ_weekday", "page": "ca", "section": "occ", "label_fr": "Taux d'occupation cible — nuits de semaine (dim.–jeu.)", "label_en": "Target occupancy — weekday nights (Sun–Thu)", "value": 0.3, "unit": "%", "status": "H", "source": "Étude de marché §6"}, {"key": "occ_weekend", "page": "ca", "section": "occ", "label_fr": "Taux d'occupation cible — nuits de week-end (ven., sam.)", "label_en": "Target occupancy — weekend nights (Fri, Sat)", "value": 0.8, "unit": "%", "status": "H", "source": "Étude de marché §6"}, {"key": "occ_holiday", "page": "ca", "section": "occ", "label_fr": "Taux d'occupation cible — jours fériés", "label_en": "Target occupancy — public holidays", "value": 0.85, "unit": "%", "status": "H", "source": "Étude de marché §6"}, {"key": "sf_occ_low", "page": "ca", "section": "occ", "label_fr": "Coefficient d'occupation — basse saison", "label_en": "Occupancy factor — low season", "value": 0.75, "unit": "x", "status": "H", "source": "AirROI Bouznika (saisonnalité)"}, {"key": "sf_occ_mid", "page": "ca", "section": "occ", "label_fr": "Coefficient d'occupation — moyenne saison", "label_en": "Occupancy factor — mid season", "value": 1.0, "unit": "x", "status": "H", "source": ""}, {"key": "sf_occ_high", "page": "ca", "section": "occ", "label_fr": "Coefficient d'occupation — haute saison", "label_en": "Occupancy factor — high season", "value": 1.2, "unit": "x", "status": "H", "source": "AirROI Bouznika (saisonnalité)"}, {"key": "ramp_oy2", "page": "ca", "section": "occ", "label_fr": "Montée en charge — année d'exploitation 2", "label_en": "Ramp-up — operating year 2", "value": 0.9, "unit": "%", "status": "H", "source": "Build-prompt §6.2"}, {"key": "ramp_oy3", "page": "ca", "section": "occ", "label_fr": "Montée en charge — années 3 et suivantes", "label_en": "Ramp-up — year 3 onwards", "value": 1.0, "unit": "%", "status": "H", "source": ""}, {"key": "women_days", "page": "ca", "section": "occ", "label_fr": "Jours féminins mardi–mercredi (1 = oui)", "label_en": "Women-only Tue–Wed (1 = yes)", "value": 0, "unit": "0/1", "status": "H", "source": "Étude §8 — option"}, {"key": "women_eligible", "page": "ca", "section": "occ", "label_fr": "Part de la demande éligible les jours féminins", "label_en": "Eligible demand on women-only days", "value": 0.55, "unit": "%", "status": "H", "source": ""}, {"key": "price_weekday_pp", "page": "ca", "section": "price", "label_fr": "Prix double / pers. / nuit — semaine", "label_en": "Double price pp / night — weekday", "value": 2550, "unit": "MAD", "status": "H", "source": "Brief §10"}, {"key": "price_weekend_pp", "page": "ca", "section": "price", "label_fr": "Prix double / pers. / nuit — week-end et fériés", "label_en": "Double price pp / night — weekend & holidays", "value": 2850, "unit": "MAD", "status": "H", "source": "Brief §10"}, {"key": "sf_price_low", "page": "ca", "section": "price", "label_fr": "Coefficient prix — basse saison", "label_en": "Price factor — low season", "value": 0.95, "unit": "x", "status": "H", "source": ""}, {"key": "sf_price_mid", "page": "ca", "section": "price", "label_fr": "Coefficient prix — moyenne saison", "label_en": "Price factor — mid season", "value": 1.0, "unit": "x", "status": "H", "source": ""}, {"key": "sf_price_high", "page": "ca", "section": "price", "label_fr": "Coefficient prix — haute saison", "label_en": "Price factor — high season", "value": 1.1, "unit": "x", "status": "H", "source": ""}, {"key": "dec_high_from_day", "page": "ca", "section": "price", "label_fr": "Haute saison de décembre à partir du", "label_en": "December high season from day", "value": 20, "unit": "jour", "status": "H", "source": ""}, {"key": "solo_supplement", "page": "ca", "section": "price", "label_fr": "Supplément occupation individuelle", "label_en": "Single-occupancy supplement", "value": 0.45, "unit": "%", "status": "H", "source": "Étude §7"}, {"key": "suite_supplement", "page": "ca", "section": "price", "label_fr": "Supplément suite / nuit", "label_en": "Suite supplement / night", "value": 1550, "unit": "MAD", "status": "H", "source": "Brief §10"}, {"key": "suite_share", "page": "ca", "section": "price", "label_fr": "Part de la suite dans les nuitées vendues", "label_en": "Suite share of room-nights sold", "value": 0.2, "unit": "%", "status": "H", "source": "1 suite / 5 chambres"}, {"key": "launch_discount", "page": "ca", "section": "price", "label_fr": "Remise de lancement", "label_en": "Launch discount", "value": 0.05, "unit": "%", "status": "H", "source": "Étude §7"}, {"key": "launch_days", "page": "ca", "section": "price", "label_fr": "Durée de la remise de lancement", "label_en": "Launch discount duration", "value": 120, "unit": "jours", "status": "H", "source": ""}, {"key": "los_discount_eff", "page": "ca", "section": "price", "label_fr": "Remise moyenne séjours longs (effective)", "label_en": "Average long-stay discount (effective)", "value": 0.03, "unit": "%", "status": "H", "source": ""}, {"key": "solo_share", "page": "ca", "section": "stay", "label_fr": "Part des chambres en occupation individuelle", "label_en": "Share of single-occupancy rooms", "value": 0.25, "unit": "%", "status": "H", "source": "Étude §5"}, {"key": "alos_weekday", "page": "ca", "section": "stay", "label_fr": "Durée moyenne de séjour — semaine", "label_en": "Average length of stay — weekday", "value": 2.8, "unit": "nuits", "status": "H", "source": ""}, {"key": "alos_weekend", "page": "ca", "section": "stay", "label_fr": "Durée moyenne de séjour — week-end", "label_en": "Average length of stay — weekend", "value": 2.1, "unit": "nuits", "status": "H", "source": ""}, {"key": "deposit_pct", "page": "ca", "section": "cash", "label_fr": "Acompte à la réservation", "label_en": "Deposit at booking", "value": 0.3, "unit": "%", "status": "H", "source": "Étude §7"}, {"key": "lead_days", "page": "ca", "section": "cash", "label_fr": "Délai moyen de réservation", "label_en": "Average booking lead time", "value": 14, "unit": "jours", "status": "H", "source": ""}, {"key": "vat_package", "page": "ca", "section": "cash", "label_fr": "TVA sur forfaits", "label_en": "VAT on packages", "value": 0.1, "unit": "%", "status": "H", "source": "à confirmer (comptable)"}, {"key": "vat_extras", "page": "ca", "section": "cash", "label_fr": "TVA sur extras", "label_en": "VAT on extras", "value": 0.2, "unit": "%", "status": "H", "source": "à confirmer (comptable)"}, {"key": "treatment_slots_day", "page": "ca", "section": "cash", "label_fr": "Capacité de soins / jour", "label_en": "Treatment capacity / day", "value": 6, "unit": "nb", "status": "H", "source": "1 praticien·ne × 8 h"}, {"key": "vehicle_trips_day", "page": "ca", "section": "cash", "label_fr": "Capacité de trajets 4×4 / jour", "label_en": "4×4 trips capacity / day", "value": 3, "unit": "nb", "status": "H", "source": "1 véhicule"}, {"key": "fb_guest_night", "page": "ch", "section": "var", "label_fr": "Restauration / nuitée-client", "label_en": "F&B / guest-night", "value": 200, "unit": "MAD", "status": "H", "source": "v1 (600) indexé — devis chef"}, {"key": "amenities_guest_night", "page": "ch", "section": "var", "label_fr": "Produits d'accueil / nuitée-client", "label_en": "Amenities / guest-night", "value": 60, "unit": "MAD", "status": "H", "source": ""}, {"key": "welcome_kit", "page": "ch", "section": "var", "label_fr": "Kit d'accueil / client-séjour", "label_en": "Welcome pack / guest-stay", "value": 200, "unit": "MAD", "status": "H", "source": ""}, {"key": "linen_room_night", "page": "ch", "section": "var", "label_fr": "Linge / nuitée-chambre", "label_en": "Linen / room-night", "value": 50, "unit": "MAD", "status": "H", "source": ""}, {"key": "linen_stay", "page": "ch", "section": "var", "label_fr": "Changement complet de linge / séjour", "label_en": "Full linen change / stay", "value": 200, "unit": "MAD", "status": "H", "source": ""}, {"key": "energy_room_night", "page": "ch", "section": "var", "label_fr": "Énergie variable / nuitée-chambre", "label_en": "Variable energy / room-night", "value": 50, "unit": "MAD", "status": "H", "source": ""}, {"key": "sessions_per_day", "page": "ch", "section": "well", "label_fr": "Séances incluses / jour", "label_en": "Included sessions / day", "value": 3, "unit": "nb", "status": "D", "source": "Brief §8"}, {"key": "lead_sessions_week", "page": "ch", "section": "well", "label_fr": "Séances couvertes par le référent / semaine", "label_en": "Sessions covered by wellness lead / week", "value": 15, "unit": "nb", "status": "H", "source": ""}, {"key": "freelance_fee", "page": "ch", "section": "well", "label_fr": "Tarif séance freelance", "label_en": "Freelance fee / session", "value": 450, "unit": "MAD", "status": "H", "source": "Étude §9 — à sonder"}, {"key": "absence_start_week", "page": "ch", "section": "well", "label_fr": "Absence d'intervenant — semaine de début", "label_en": "Practitioner absence — start week", "value": 20, "unit": "sem.", "status": "H", "source": "Scénario"}, {"key": "absence_weeks", "page": "ch", "section": "well", "label_fr": "Absence d'intervenant — durée (0 = aucune)", "label_en": "Practitioner absence — weeks (0 = none)", "value": 0, "unit": "sem.", "status": "H", "source": "Scénario"}, {"key": "absence_demand_cut", "page": "ch", "section": "well", "label_fr": "Absence — baisse de la demande", "label_en": "Absence — demand drop", "value": 0.1, "unit": "%", "status": "H", "source": ""}, {"key": "absence_premium", "page": "ch", "section": "well", "label_fr": "Absence — surcoût des remplaçants", "label_en": "Absence — replacement premium", "value": 0.5, "unit": "%", "status": "H", "source": ""}, {"key": "employer_rate", "page": "ch", "section": "team", "label_fr": "Charges patronales (CNSS, AMO, TFP)", "label_en": "Employer charges", "value": 0.21, "unit": "%", "status": "F", "source": "v1"}, {"key": "leave_cover", "page": "ch", "section": "team", "label_fr": "Couverture repos / congés", "label_en": "Leave & rest cover", "value": 0.08, "unit": "%", "status": "H", "source": "Brief §11"}, {"key": "seasonal_monthly", "page": "ch", "section": "team", "label_fr": "Renfort saisonnier (brut / mois)", "label_en": "Seasonal staff (gross / month)", "value": 11000, "unit": "MAD", "status": "H", "source": ""}, {"key": "seasonal_from", "page": "ch", "section": "team", "label_fr": "Renfort saisonnier — premier mois", "label_en": "Seasonal staff — first month", "value": 6, "unit": "mois", "status": "H", "source": ""}, {"key": "seasonal_to", "page": "ch", "section": "team", "label_fr": "Renfort saisonnier — dernier mois", "label_en": "Seasonal staff — last month", "value": 9, "unit": "mois", "status": "H", "source": ""}, {"key": "utilities_m", "page": "ch", "section": "fix", "label_fr": "Énergie & fluides fixes (piscine intérieure incl.) / mois", "label_en": "Fixed utilities (incl. indoor pool) / month", "value": 15100, "unit": "MAD", "status": "H", "source": "devis à obtenir"}, {"key": "maintenance_m", "page": "ch", "section": "fix", "label_fr": "Maintenance piscines, bâtiment, jardins / mois", "label_en": "Maintenance / month", "value": 14000, "unit": "MAD", "status": "H", "source": ""}, {"key": "tech_uplift", "page": "ch", "section": "fix", "label_fr": "Majoration des charges techniques", "label_en": "Technical costs uplift", "value": 0, "unit": "%", "status": "H", "source": "Scénario"}, {"key": "software_m", "page": "ch", "section": "fix", "label_fr": "Logiciels (PMS, moteur de réservation) / mois", "label_en": "Software / month", "value": 2500, "unit": "MAD", "status": "H", "source": ""}, {"key": "admin_m", "page": "ch", "section": "fix", "label_fr": "Comptabilité, paie, juridique / mois", "label_en": "Accounting, payroll, legal / month", "value": 2000, "unit": "MAD", "status": "H", "source": ""}, {"key": "insurance_y", "page": "ch", "section": "fix", "label_fr": "Assurances / an", "label_en": "Insurance / year", "value": 20000, "unit": "MAD", "status": "H", "source": "devis en attente"}, {"key": "marketing_y", "page": "ch", "section": "fix", "label_fr": "Marketing / an", "label_en": "Marketing / year", "value": 400000, "unit": "MAD", "status": "H", "source": "Sheet v1 (v9)"}, {"key": "launch_marketing", "page": "ch", "section": "fix", "label_fr": "Budget de lancement", "label_en": "Launch budget", "value": 60000, "unit": "MAD", "status": "H", "source": ""}, {"key": "taxes_y", "page": "ch", "section": "fix", "label_fr": "Taxes locales / an", "label_en": "Local taxes / year", "value": 40000, "unit": "MAD", "status": "H", "source": "v1"}, {"key": "ffe_reserve", "page": "ch", "section": "fix", "label_fr": "Réserve FF&E (dès l'année 2, % du CA HT)", "label_en": "FF&E reserve (from year 2, % of revenue)", "value": 0.03, "unit": "%", "status": "H", "source": "Build-prompt §5.13"}, {"key": "card_fee", "page": "ch", "section": "fin", "label_fr": "Frais de carte", "label_en": "Card fees", "value": 0.02, "unit": "%", "status": "H", "source": "v1"}, {"key": "card_share", "page": "ch", "section": "fin", "label_fr": "Part des paiements par carte", "label_en": "Share paid by card", "value": 0.7, "unit": "%", "status": "H", "source": ""}, {"key": "input_vat", "page": "ch", "section": "fin", "label_fr": "TVA récupérable (part des achats éligibles)", "label_en": "Recoverable VAT (share of eligible purchases)", "value": 0.15, "unit": "%", "status": "H", "source": "v1"}, {"key": "is_rate", "page": "ch", "section": "fin", "label_fr": "Impôt sur les sociétés", "label_en": "Corporate tax", "value": 0.2, "unit": "%", "status": "F", "source": "CGI"}, {"key": "opening_cash", "page": "ch", "section": "fin", "label_fr": "Trésorerie d'ouverture (volet C)", "label_en": "Opening cash (tranche C)", "value": 502000, "unit": "MAD", "status": "D", "source": "Annexe programme v2"}, {"key": "cash_buffer", "page": "ch", "section": "fin", "label_fr": "Seuil de sécurité de trésorerie", "label_en": "Cash buffer", "value": 300000, "unit": "MAD", "status": "H", "source": ""}, {"key": "loan_principal", "page": "ch", "section": "fin", "label_fr": "Crédit Attijari — montant", "label_en": "Attijari loan — principal", "value": 5000000, "unit": "MAD", "status": "D", "source": "Lettre v4"}, {"key": "loan_rate", "page": "ch", "section": "fin", "label_fr": "Crédit — taux", "label_en": "Loan — rate", "value": 0.06, "unit": "%", "status": "D", "source": "Présentation financière"}, {"key": "loan_drawdown", "page": "ch", "section": "fin", "label_fr": "Crédit — date de déblocage", "label_en": "Loan — drawdown date", "value": "2026-12-15", "unit": "date", "status": "H", "source": "Présentation (T4 2026)"}, {"key": "loan_grace_quarters", "page": "ch", "section": "fin", "label_fr": "Crédit — différé (trimestres)", "label_en": "Loan — grace (quarters)", "value": 8, "unit": "nb", "status": "D", "source": ""}, {"key": "loan_years", "page": "ch", "section": "fin", "label_fr": "Crédit — annuités (années)", "label_en": "Loan — annual instalments (years)", "value": 5, "unit": "nb", "status": "D", "source": ""}, {"key": "capex_p2", "page": "ch", "section": "fin", "label_fr": "Travaux phase 2", "label_en": "Works phase 2", "value": 300000, "unit": "MAD", "status": "F", "source": "Annexe programme v2"}, {"key": "capex_p2_month", "page": "ch", "section": "fin", "label_fr": "Travaux phase 2 — mois d'exploitation", "label_en": "Works phase 2 — operating month", "value": 3, "unit": "mois", "status": "H", "source": ""}, {"key": "capex_p3", "page": "ch", "section": "fin", "label_fr": "Travaux phase 3", "label_en": "Works phase 3", "value": 684000, "unit": "MAD", "status": "F", "source": "Annexe programme v2"}, {"key": "capex_p3_month", "page": "ch", "section": "fin", "label_fr": "Travaux phase 3 — mois d'exploitation", "label_en": "Works phase 3 — operating month", "value": 6, "unit": "mois", "status": "H", "source": ""}, {"key": "depreciation_y", "page": "ch", "section": "fin", "label_fr": "Amortissements / an", "label_en": "Depreciation / year", "value": 510016, "unit": "MAD", "status": "F", "source": "Présentation financière"}, {"key": "indexation", "page": "ch", "section": "fin", "label_fr": "Indexation annuelle prix et charges (dès l'année 2)", "label_en": "Annual indexation (from year 2)", "value": 0.03, "unit": "%", "status": "H", "source": "Présentation financière"}], "sections": {"cal": ["Calendrier & ouverture", "Calendar & opening"], "occ": ["Taux d'occupation des chambres", "Room occupancy rates"], "price": ["Prix des forfaits (MAD TTC)", "Package prices (MAD incl. VAT)"], "stay": ["Clientèle & séjours", "Guests & stays"], "cash": ["Encaissements, TVA & capacités", "Collections, VAT & capacities"], "var": ["Coûts variables", "Variable costs"], "well": ["Wellness inclus & intervenants", "Included wellness & practitioners"], "team": ["Équipe — paramètres", "Team — parameters"], "fix": ["Charges fixes", "Fixed costs"], "fin": ["Frais, fiscalité & financement", "Fees, tax & financing"]}, "tables": {"ramp": [{"m": 1, "label_fr": "Mois 1", "label_en": "Month 1", "value": 0.5}, {"m": 2, "label_fr": "Mois 2", "label_en": "Month 2", "value": 0.55}, {"m": 3, "label_fr": "Mois 3", "label_en": "Month 3", "value": 0.6}, {"m": 4, "label_fr": "Mois 4", "label_en": "Month 4", "value": 0.65}, {"m": 5, "label_fr": "Mois 5", "label_en": "Month 5", "value": 0.7}, {"m": 6, "label_fr": "Mois 6", "label_en": "Month 6", "value": 0.75}, {"m": 7, "label_fr": "Mois 7", "label_en": "Month 7", "value": 0.8}, {"m": 8, "label_fr": "Mois 8", "label_en": "Month 8", "value": 0.85}, {"m": 9, "label_fr": "Mois 9", "label_en": "Month 9", "value": 0.85}, {"m": 10, "label_fr": "Mois 10", "label_en": "Month 10", "value": 0.9}, {"m": 11, "label_fr": "Mois 11", "label_en": "Month 11", "value": 0.9}, {"m": 12, "label_fr": "Mois 12", "label_en": "Month 12", "value": 0.9}], "seasons": [{"m": 1, "label_fr": "Janvier", "label_en": "January", "season": "low"}, {"m": 2, "label_fr": "Février", "label_en": "February", "season": "low"}, {"m": 3, "label_fr": "Mars", "label_en": "March", "season": "mid"}, {"m": 4, "label_fr": "Avril", "label_en": "April", "season": "mid"}, {"m": 5, "label_fr": "Mai", "label_en": "May", "season": "mid"}, {"m": 6, "label_fr": "Juin", "label_en": "June", "season": "mid"}, {"m": 7, "label_fr": "Juillet", "label_en": "July", "season": "high"}, {"m": 8, "label_fr": "Août", "label_en": "August", "season": "high"}, {"m": 9, "label_fr": "Septembre", "label_en": "September", "season": "mid"}, {"m": 10, "label_fr": "Octobre", "label_en": "October", "season": "mid"}, {"m": 11, "label_fr": "Novembre", "label_en": "November", "season": "low"}, {"m": 12, "label_fr": "Décembre", "label_en": "December", "season": "low"}], "holidays": [{"date": "2027-01-01", "label_fr": "Nouvel an", "label_en": "New Year", "approx": 0}, {"date": "2027-01-11", "label_fr": "Manifeste de l'Indépendance", "label_en": "Independence Manifesto", "approx": 0}, {"date": "2027-01-14", "label_fr": "Nouvel an amazigh", "label_en": "Amazigh New Year", "approx": 0}, {"date": "2027-03-10", "label_fr": "Aïd al-Fitr (date approx.)", "label_en": "Eid al-Fitr (approx. date)", "approx": 1}, {"date": "2027-03-11", "label_fr": "Aïd al-Fitr (2) (date approx.)", "label_en": "Eid al-Fitr (2) (approx. date)", "approx": 1}, {"date": "2027-05-01", "label_fr": "Fête du Travail", "label_en": "Labour Day", "approx": 0}, {"date": "2027-05-17", "label_fr": "Aïd al-Adha (date approx.)", "label_en": "Eid al-Adha (approx. date)", "approx": 1}, {"date": "2027-05-18", "label_fr": "Aïd al-Adha (2) (date approx.)", "label_en": "Eid al-Adha (2) (approx. date)", "approx": 1}, {"date": "2027-06-06", "label_fr": "1er Moharram (date approx.)", "label_en": "Islamic New Year (approx. date)", "approx": 1}, {"date": "2027-07-30", "label_fr": "Fête du Trône", "label_en": "Throne Day", "approx": 0}, {"date": "2027-08-14", "label_fr": "Oued Eddahab", "label_en": "Oued Eddahab Day", "approx": 0}, {"date": "2027-08-15", "label_fr": "Aïd al-Mawlid (date approx.)", "label_en": "Mawlid (approx. date)", "approx": 1}, {"date": "2027-08-16", "label_fr": "Aïd al-Mawlid (2) (date approx.)", "label_en": "Mawlid (2) (approx. date)", "approx": 1}, {"date": "2027-08-20", "label_fr": "Révolution du Roi et du Peuple", "label_en": "Revolution Day", "approx": 0}, {"date": "2027-08-21", "label_fr": "Fête de la Jeunesse", "label_en": "Youth Day", "approx": 0}, {"date": "2027-11-06", "label_fr": "Marche Verte", "label_en": "Green March", "approx": 0}, {"date": "2027-11-18", "label_fr": "Fête de l'Indépendance", "label_en": "Independence Day", "approx": 0}, {"date": "2028-01-01", "label_fr": "Nouvel an", "label_en": "New Year", "approx": 0}, {"date": "2028-01-11", "label_fr": "Manifeste de l'Indépendance", "label_en": "Independence Manifesto", "approx": 0}, {"date": "2028-01-14", "label_fr": "Nouvel an amazigh", "label_en": "Amazigh New Year", "approx": 0}, {"date": "2028-02-27", "label_fr": "Aïd al-Fitr (date approx.)", "label_en": "Eid al-Fitr (approx. date)", "approx": 1}, {"date": "2028-02-28", "label_fr": "Aïd al-Fitr (2) (date approx.)", "label_en": "Eid al-Fitr (2) (approx. date)", "approx": 1}, {"date": "2028-05-01", "label_fr": "Fête du Travail", "label_en": "Labour Day", "approx": 0}, {"date": "2028-05-05", "label_fr": "Aïd al-Adha (date approx.)", "label_en": "Eid al-Adha (approx. date)", "approx": 1}, {"date": "2028-05-06", "label_fr": "Aïd al-Adha (2) (date approx.)", "label_en": "Eid al-Adha (2) (approx. date)", "approx": 1}, {"date": "2028-05-26", "label_fr": "1er Moharram (date approx.)", "label_en": "Islamic New Year (approx. date)", "approx": 1}, {"date": "2028-07-30", "label_fr": "Fête du Trône", "label_en": "Throne Day", "approx": 0}, {"date": "2028-08-03", "label_fr": "Aïd al-Mawlid (date approx.)", "label_en": "Mawlid (approx. date)", "approx": 1}, {"date": "2028-08-04", "label_fr": "Aïd al-Mawlid (2) (date approx.)", "label_en": "Mawlid (2) (approx. date)", "approx": 1}, {"date": "2028-08-14", "label_fr": "Oued Eddahab", "label_en": "Oued Eddahab Day", "approx": 0}, {"date": "2028-08-20", "label_fr": "Révolution du Roi et du Peuple", "label_en": "Revolution Day", "approx": 0}, {"date": "2028-08-21", "label_fr": "Fête de la Jeunesse", "label_en": "Youth Day", "approx": 0}, {"date": "2028-11-06", "label_fr": "Marche Verte", "label_en": "Green March", "approx": 0}, {"date": "2028-11-18", "label_fr": "Fête de l'Indépendance", "label_en": "Independence Day", "approx": 0}, {"date": "2029-01-01", "label_fr": "Nouvel an", "label_en": "New Year", "approx": 0}, {"date": "2029-01-11", "label_fr": "Manifeste de l'Indépendance", "label_en": "Independence Manifesto", "approx": 0}, {"date": "2029-01-14", "label_fr": "Nouvel an amazigh", "label_en": "Amazigh New Year", "approx": 0}, {"date": "2029-02-14", "label_fr": "Aïd al-Fitr (date approx.)", "label_en": "Eid al-Fitr (approx. date)", "approx": 1}, {"date": "2029-02-15", "label_fr": "Aïd al-Fitr (2) (date approx.)", "label_en": "Eid al-Fitr (2) (approx. date)", "approx": 1}, {"date": "2029-04-24", "label_fr": "Aïd al-Adha (date approx.)", "label_en": "Eid al-Adha (approx. date)", "approx": 1}, {"date": "2029-04-25", "label_fr": "Aïd al-Adha (2) (date approx.)", "label_en": "Eid al-Adha (2) (approx. date)", "approx": 1}, {"date": "2029-05-01", "label_fr": "Fête du Travail", "label_en": "Labour Day", "approx": 0}, {"date": "2029-05-15", "label_fr": "1er Moharram (date approx.)", "label_en": "Islamic New Year (approx. date)", "approx": 1}, {"date": "2029-07-24", "label_fr": "Aïd al-Mawlid (date approx.)", "label_en": "Mawlid (approx. date)", "approx": 1}, {"date": "2029-07-25", "label_fr": "Aïd al-Mawlid (2) (date approx.)", "label_en": "Mawlid (2) (approx. date)", "approx": 1}, {"date": "2029-07-30", "label_fr": "Fête du Trône", "label_en": "Throne Day", "approx": 0}, {"date": "2029-08-14", "label_fr": "Oued Eddahab", "label_en": "Oued Eddahab Day", "approx": 0}, {"date": "2029-08-20", "label_fr": "Révolution du Roi et du Peuple", "label_en": "Revolution Day", "approx": 0}, {"date": "2029-08-21", "label_fr": "Fête de la Jeunesse", "label_en": "Youth Day", "approx": 0}, {"date": "2029-11-06", "label_fr": "Marche Verte", "label_en": "Green March", "approx": 0}, {"date": "2029-11-18", "label_fr": "Fête de l'Indépendance", "label_en": "Independence Day", "approx": 0}, {"date": "2030-01-01", "label_fr": "Nouvel an", "label_en": "New Year", "approx": 0}, {"date": "2030-01-11", "label_fr": "Manifeste de l'Indépendance", "label_en": "Independence Manifesto", "approx": 0}, {"date": "2030-01-14", "label_fr": "Nouvel an amazigh", "label_en": "Amazigh New Year", "approx": 0}, {"date": "2030-02-04", "label_fr": "Aïd al-Fitr (date approx.)", "label_en": "Eid al-Fitr (approx. date)", "approx": 1}, {"date": "2030-02-05", "label_fr": "Aïd al-Fitr (2) (date approx.)", "label_en": "Eid al-Fitr (2) (approx. date)", "approx": 1}, {"date": "2030-04-13", "label_fr": "Aïd al-Adha (date approx.)", "label_en": "Eid al-Adha (approx. date)", "approx": 1}, {"date": "2030-04-14", "label_fr": "Aïd al-Adha (2) (date approx.)", "label_en": "Eid al-Adha (2) (approx. date)", "approx": 1}, {"date": "2030-05-01", "label_fr": "Fête du Travail", "label_en": "Labour Day", "approx": 0}, {"date": "2030-05-04", "label_fr": "1er Moharram (date approx.)", "label_en": "Islamic New Year (approx. date)", "approx": 1}, {"date": "2030-07-13", "label_fr": "Aïd al-Mawlid (date approx.)", "label_en": "Mawlid (approx. date)", "approx": 1}, {"date": "2030-07-14", "label_fr": "Aïd al-Mawlid (2) (date approx.)", "label_en": "Mawlid (2) (approx. date)", "approx": 1}, {"date": "2030-07-30", "label_fr": "Fête du Trône", "label_en": "Throne Day", "approx": 0}, {"date": "2030-08-14", "label_fr": "Oued Eddahab", "label_en": "Oued Eddahab Day", "approx": 0}, {"date": "2030-08-20", "label_fr": "Révolution du Roi et du Peuple", "label_en": "Revolution Day", "approx": 0}, {"date": "2030-08-21", "label_fr": "Fête de la Jeunesse", "label_en": "Youth Day", "approx": 0}, {"date": "2030-11-06", "label_fr": "Marche Verte", "label_en": "Green March", "approx": 0}, {"date": "2030-11-18", "label_fr": "Fête de l'Indépendance", "label_en": "Independence Day", "approx": 0}, {"date": "2031-01-01", "label_fr": "Nouvel an", "label_en": "New Year", "approx": 0}, {"date": "2031-01-11", "label_fr": "Manifeste de l'Indépendance", "label_en": "Independence Manifesto", "approx": 0}, {"date": "2031-01-14", "label_fr": "Nouvel an amazigh", "label_en": "Amazigh New Year", "approx": 0}, {"date": "2031-01-24", "label_fr": "Aïd al-Fitr (date approx.)", "label_en": "Eid al-Fitr (approx. date)", "approx": 1}, {"date": "2031-01-25", "label_fr": "Aïd al-Fitr (2) (date approx.)", "label_en": "Eid al-Fitr (2) (approx. date)", "approx": 1}, {"date": "2031-04-02", "label_fr": "Aïd al-Adha (date approx.)", "label_en": "Eid al-Adha (approx. date)", "approx": 1}, {"date": "2031-04-03", "label_fr": "Aïd al-Adha (2) (date approx.)", "label_en": "Eid al-Adha (2) (approx. date)", "approx": 1}, {"date": "2031-04-24", "label_fr": "1er Moharram (date approx.)", "label_en": "Islamic New Year (approx. date)", "approx": 1}, {"date": "2031-05-01", "label_fr": "Fête du Travail", "label_en": "Labour Day", "approx": 0}, {"date": "2031-07-02", "label_fr": "Aïd al-Mawlid (date approx.)", "label_en": "Mawlid (approx. date)", "approx": 1}, {"date": "2031-07-03", "label_fr": "Aïd al-Mawlid (2) (date approx.)", "label_en": "Mawlid (2) (approx. date)", "approx": 1}, {"date": "2031-07-30", "label_fr": "Fête du Trône", "label_en": "Throne Day", "approx": 0}, {"date": "2031-08-14", "label_fr": "Oued Eddahab", "label_en": "Oued Eddahab Day", "approx": 0}, {"date": "2031-08-20", "label_fr": "Révolution du Roi et du Peuple", "label_en": "Revolution Day", "approx": 0}, {"date": "2031-08-21", "label_fr": "Fête de la Jeunesse", "label_en": "Youth Day", "approx": 0}, {"date": "2031-11-06", "label_fr": "Marche Verte", "label_en": "Green March", "approx": 0}, {"date": "2031-11-18", "label_fr": "Fête de l'Indépendance", "label_en": "Independence Day", "approx": 0}, {"date": "2032-01-01", "label_fr": "Nouvel an", "label_en": "New Year", "approx": 0}, {"date": "2032-01-11", "label_fr": "Manifeste de l'Indépendance", "label_en": "Independence Manifesto", "approx": 0}, {"date": "2032-01-14", "label_fr": "Nouvel an amazigh", "label_en": "Amazigh New Year", "approx": 0}, {"date": "2032-01-14", "label_fr": "Aïd al-Fitr (date approx.)", "label_en": "Eid al-Fitr (approx. date)", "approx": 1}, {"date": "2032-01-15", "label_fr": "Aïd al-Fitr (2) (date approx.)", "label_en": "Eid al-Fitr (2) (approx. date)", "approx": 1}, {"date": "2032-03-22", "label_fr": "Aïd al-Adha (date approx.)", "label_en": "Eid al-Adha (approx. date)", "approx": 1}, {"date": "2032-03-23", "label_fr": "Aïd al-Adha (2) (date approx.)", "label_en": "Eid al-Adha (2) (approx. date)", "approx": 1}, {"date": "2032-04-12", "label_fr": "1er Moharram (date approx.)", "label_en": "Islamic New Year (approx. date)", "approx": 1}, {"date": "2032-05-01", "label_fr": "Fête du Travail", "label_en": "Labour Day", "approx": 0}, {"date": "2032-06-21", "label_fr": "Aïd al-Mawlid (date approx.)", "label_en": "Mawlid (approx. date)", "approx": 1}, {"date": "2032-06-22", "label_fr": "Aïd al-Mawlid (2) (date approx.)", "label_en": "Mawlid (2) (approx. date)", "approx": 1}, {"date": "2032-07-30", "label_fr": "Fête du Trône", "label_en": "Throne Day", "approx": 0}, {"date": "2032-08-14", "label_fr": "Oued Eddahab", "label_en": "Oued Eddahab Day", "approx": 0}, {"date": "2032-08-20", "label_fr": "Révolution du Roi et du Peuple", "label_en": "Revolution Day", "approx": 0}, {"date": "2032-08-21", "label_fr": "Fête de la Jeunesse", "label_en": "Youth Day", "approx": 0}, {"date": "2032-11-06", "label_fr": "Marche Verte", "label_en": "Green March", "approx": 0}, {"date": "2032-11-18", "label_fr": "Fête de l'Indépendance", "label_en": "Independence Day", "approx": 0}], "channels": [{"id": "web", "label_fr": "Site direct", "label_en": "Direct website", "share": 0.25, "commission": 0.0}, {"id": "wa", "label_fr": "WhatsApp / téléphone", "label_en": "WhatsApp / phone", "share": 0.35, "commission": 0.0}, {"id": "ota", "label_fr": "OTA", "label_en": "OTAs", "share": 0.2, "commission": 0.17}, {"id": "ret", "label_fr": "Plateformes de retraites", "label_en": "Retreat platforms", "share": 0.08, "commission": 0.15}, {"id": "agt", "label_fr": "Agences / concierges", "label_en": "Agencies / concierges", "share": 0.08, "commission": 0.12}, {"id": "corp", "label_fr": "Entreprises", "label_en": "Employers", "share": 0.04, "commission": 0.0}], "extras": [{"id": "massage", "label_fr": "Massage 60 min", "label_en": "60-min massage", "price": 950, "attach": 0.45, "cost": 350, "resource": "therapist"}, {"id": "hammam", "label_fr": "Rituel hammam avec gommage", "label_en": "Hammam ritual with scrub", "price": 600, "attach": 0.35, "cost": 190, "resource": "therapist"}, {"id": "facial", "label_fr": "Soin visage", "label_en": "Facial", "price": 800, "attach": 0.1, "cost": 330, "resource": "therapist"}, {"id": "private", "label_fr": "Séance privée (yoga, aérien, coaching)", "label_en": "Private session (yoga, aerial, coaching)", "price": 800, "attach": 0.05, "cost": 400, "resource": "none"}, {"id": "cook", "label_fr": "Atelier cuisine", "label_en": "Cooking workshop", "price": 600, "attach": 0.1, "cost": 250, "resource": "none"}, {"id": "pottery", "label_fr": "Atelier poterie", "label_en": "Pottery workshop", "price": 600, "attach": 0.06, "cost": 300, "resource": "none"}, {"id": "photo", "label_fr": "Atelier photo", "label_en": "Photography walk", "price": 500, "attach": 0.04, "cost": 250, "resource": "none"}, {"id": "golf", "label_fr": "Golf (revente — commission nette)", "label_en": "Golf (resale — net commission)", "price": 150, "attach": 0.05, "cost": 0, "resource": "none"}, {"id": "tennis", "label_fr": "Tennis (court + coach)", "label_en": "Tennis (court + coach)", "price": 400, "attach": 0.03, "cost": 250, "resource": "none"}, {"id": "transfer", "label_fr": "Transfert 4×4 aéroport", "label_en": "4×4 airport transfer", "price": 1100, "attach": 0.2, "cost": 250, "resource": "vehicle"}, {"id": "late", "label_fr": "Départ tardif", "label_en": "Late check-out", "price": 800, "attach": 0.05, "cost": 100, "resource": "none"}], "poles": [{"id": "dir", "label_fr": "Direction & accueil", "label_en": "Management & front of house"}, {"id": "kit", "label_fr": "Cuisine", "label_en": "Kitchen"}, {"id": "hk", "label_fr": "Housekeeping & lingerie", "label_en": "Housekeeping & linen"}, {"id": "well", "label_fr": "Wellness & spa", "label_en": "Wellness & spa"}, {"id": "tech", "label_fr": "Technique & sécurité", "label_en": "Technical & security"}, {"id": "free", "label_fr": "Postes libres", "label_en": "Free positions"}], "roster": [{"pole": "dir", "label_fr": "Direction de maison / guest experience", "label_en": "House manager / guest experience", "fte": 1, "gross": 14000}, {"pole": "dir", "label_fr": "Accueil, service & conciergerie", "label_en": "Reception, service & concierge", "fte": 2, "gross": 6500}, {"pole": "kit", "label_fr": "Chef", "label_en": "Chef", "fte": 1, "gross": 12000}, {"pole": "kit", "label_fr": "Second / commis", "label_en": "Sous-chef / commis", "fte": 1, "gross": 6000}, {"pole": "hk", "label_fr": "Housekeeping & lingerie", "label_en": "Housekeeping & linen", "fte": 2, "gross": 4500}, {"pole": "well", "label_fr": "Référent wellness polyvalent", "label_en": "Wellness lead", "fte": 1, "gross": 10000}, {"pole": "well", "label_fr": "Praticien·ne hammam / massage", "label_en": "Hammam / massage therapist", "fte": 1, "gross": 6000}, {"pole": "tech", "label_fr": "Responsable polyvalent (piscines, maintenance)", "label_en": "Pools & maintenance lead", "fte": 1, "gross": 6000}, {"pole": "tech", "label_fr": "Veille de nuit", "label_en": "Night watch", "fte": 1, "gross": 4500}, {"pole": "free", "label_fr": "Poste libre 1", "label_en": "Free position 1", "fte": 0, "gross": 0}, {"pole": "free", "label_fr": "Poste libre 2", "label_en": "Free position 2", "fte": 0, "gross": 0}, {"pole": "free", "label_fr": "Poste libre 3", "label_en": "Free position 3", "fte": 0, "gross": 0}], "segments": [{"id": "cpl", "label_fr": "Couples aisés Casablanca–Rabat", "label_en": "Affluent couples Casablanca–Rabat", "wd": 0.25, "we": 0.5}, {"id": "solo", "label_fr": "Solos (femmes et hommes)", "label_en": "Solo travellers", "wd": 0.2, "we": 0.15}, {"id": "friends", "label_fr": "Deux amis / amies", "label_en": "Two friends", "wd": 0.05, "we": 0.12}, {"id": "expat", "label_fr": "Expatriés résidents", "label_en": "Resident expatriates", "wd": 0.1, "we": 0.12}, {"id": "eu", "label_fr": "Européens prolongeant un voyage", "label_en": "Europeans extending a trip", "wd": 0.2, "we": 0.05}, {"id": "golf", "label_fr": "Golfeurs + accompagnant bien-être", "label_en": "Golfers + wellness companion", "wd": 0.08, "we": 0.02}, {"id": "gcc", "label_fr": "Voyageurs GCC", "label_en": "GCC travellers", "wd": 0.04, "we": 0.03}, {"id": "corp", "label_fr": "Séjours financés par l'employeur", "label_en": "Employer-funded stays", "wd": 0.08, "we": 0.01}]}, "kpis": {"oy1_revHT_pkg": 2787931.996, "oy1_revHT_ex": 417562.1528, "oy1_varCost": 743882.2917, "oy1_payroll": 1315608.8, "oy1_ebitda": -58849.14055, "oy1_net": -868865.1406, "oy1_receipts": 3612604.918, "oy1_closeCash": -555509.6026, "tot_ebitda": 3351585.757, "tot_net": -460644.3473, "low_cash": -637173.8314, "close_cash": 98090.14273}, "readAt": "23/09/2026 17h45", "sheetId": "1R1IC10w88staTlz_hHq-tGJyN85i07nlCu6tUo8mJq8"};
+var BUILD_STAMP = "2026-09-23_18h00";
+/* Nûr Retreats — Business model v2 · application (ES5). Core: state, i18n, formats, model, sync, publish. */
+var APP_VERSION = "v2.0";
+var V1_URL = "https://script.google.com/macros/s/AKfycbxv2d2xp_GZ5WOck2tnD6MDuQZp_KL4GaLM0tZ1MnFtLTgyB1NI0bQ5t1suXKmvTzHg/exec";
+var V1_BANK = [ // Présentation financière Attijari 16/09/2026 — v1 bank case (calendar years)
+  { y: 2027, rev: 4505455, ebitda: 1696694, net: 709342, cash: 2443509, dscr: 5.66 },
+  { y: 2028, rev: 5966509, ebitda: 2739241, net: 1543380, cash: 4759903, dscr: 7.95 },
+  { y: 2029, rev: 6828338, ebitda: 3332117, net: 2017680, cash: 6334955, dscr: 2.31 },
+  { y: 2030, rev: 7033188, ebitda: 3432080, net: 2140226, cash: 7982058, dscr: 2.37 },
+  { y: 2031, rev: 7244184, ebitda: 3535043, net: 2267726, cash: 9790175, dscr: 2.50 }];
+var V1_BASE = { rev: 6436364, ebitda: 3140840, net: 2127836, cash: 4373035, note: "Sheet v1, version 9 (année 1 à 100 %)" };
+
+var PAGE_SECTIONS = { ca: ["cal", "occ", "price", "stay", "cash"], ch: ["var", "well", "exc", "team", "fix", "fin"] };
+var WRITABLE_TABLES = ["ramp", "channels", "extras", "poles", "roster", "segments"];
+var CONTROL_KEYS = ["oy1_revHT_pkg", "oy1_revHT_ex", "oy1_varCost", "oy1_payroll", "oy1_ebitda", "oy1_net", "oy1_receipts", "oy1_closeCash", "tot_ebitda", "tot_net", "low_cash", "close_cash"];
+
+var DEFAULT_EP = "https://script.google.com/macros/s/AKfycbxKgCNWz5QyAF1RKC0_VS1-Dq5UwJJaJcrk82R0qy8zPkO1mdbtJ3Br_0re-bY9i94/exec";
+var S = { lang: "fr", tab: "dash", sub: "ca", oy: 1, scen: "base", editLabels: false, investor: false, ep: "", sheet: null, sheetAt: null,
+  fromCache: false, offline: false, busy: false, reqId: 0, cur: null, R: null, open: {}, integrity: null, scenCache: null, v1live: null, day: null };
+
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function lsGet(k) { try { var v = window.localStorage.getItem("nurv2_" + k); return v ? JSON.parse(v) : null; } catch (e) { return null; } }
+function lsSet(k, v) { try { window.localStorage.setItem("nurv2_" + k, JSON.stringify(v)); } catch (e) { } }
+function esc(s) { return String(s === undefined || s === null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function $(id) { return document.getElementById(id); }
+
+/* ---------------- i18n ---------------- */
+var TXT = {
+  title: ["Nûr Retreats — Business model v2", "Nûr Retreats — Business model v2"],
+  subtitle: ["Séjours bien-être à l'année · 5 chambres · 5 années d'exploitation", "Year-round wellness stays · 5 rooms · 5 operating years"],
+  t_dash: ["Tableau de bord", "Dashboard"], t_hyp: ["Hypothèses", "Assumptions"], t_cal: ["Calendrier", "Calendar"], t_dem: ["Demande & segments", "Demand & segments"],
+  t_rev: ["Revenus", "Revenue"], t_cost: ["Charges", "Costs"], t_team: ["Équipe & capacité", "Team & capacity"], t_cash: ["Trésorerie hebdomadaire", "Weekly cash"],
+  t_proj: ["Projection 5 ans", "5-year projection"], t_cmp: ["Comparaison v1 / v2", "v1 / v2 comparison"], t_scen: ["Scénarios & sensibilités", "Scenarios & sensitivities"],
+  p_ca: ["Hypothèses de chiffre d'affaires", "Revenue assumptions"], p_ch: ["Hypothèses de charges", "Cost assumptions"],
+  b_local: ["MODE LOCAL", "LOCAL MODE"], b_sand: ["BAC À SABLE", "SANDBOX"], b_cache: ["CACHE", "CACHE"], b_off: ["HORS LIGNE", "OFFLINE"],
+  scenario: ["Scénario", "Scenario"], print: ["Imprimer / PDF", "Print / PDF"], investor: ["Mode investisseur", "Investor mode"],
+  exportJ: ["Export JSON", "Export JSON"], exportC: ["Export CSV", "Export CSV"], reset: ["Revenir à la Base", "Back to Base"],
+  src: ["Source des données", "Data source"], sync: ["⟳ Synchroniser valeurs + libellés", "⟳ Sync values + labels"], editL: ["✎ Éditer les libellés", "✎ Edit labels"],
+  editLoff: ["✓ Terminer l'édition", "✓ Done editing"], publish: ["⇪ Publier", "⇪ Publish"], epPh: ["URL /exec du script v2 (vide = mode local)", "v2 script /exec URL (empty = local mode)"],
+  pwPrompt: ["Mot de passe de publication :", "Publishing password:"], verPrompt: ["Nom de la version :", "Version name:"],
+  unpub: ["modifié(s) non publié(s)", "unpublished change(s)"], vals: ["valeurs", "values"], labs: ["libellés (FR + EN)", "labels (FR + EN)"],
+  readFrom: ["lus depuis v2_Hypotheses", "read from v2_Hypotheses"], never: ["jamais synchronisé", "never synchronised"],
+  intOk: ["✓ Base app = Sheet (totaux de contrôle ≤ 1 MAD)", "✓ Base app = Sheet (control totals ≤ 1 MAD)"], intKo: ["⚠ Écart app / Sheet", "⚠ App / Sheet gap"],
+  embOk: ["✓ Base embarquée = Google Sheet v2_Hypotheses (lecture du ", "✓ Embedded Base = Google Sheet v2_Hypotheses (read on "],
+  embOk2: [", totaux de contrôle identiques à 1 MAD près)", ", control totals equal within 1 MAD)"],
+  warnHead: ["⚠ Points d'attention de la Base courante : ", "⚠ Watch points of the current Base: "],
+  wEbitda: ["EBITDA négatif en ", "negative EBITDA in "], wCash: ["trésorerie négative (point bas ", "negative cash (low point "], wDscr: ["DSCR < 1,2 en ", "DSCR < 1.2 in "],
+  wBe: ["occupation d'équilibre AE3 ", "OY3 break-even occupancy "], wEnd: [". Hypothèses non validées (H).", ". Assumptions not approved (H)."],
+  lossWarn: ["⚠ Avec les hypothèses de départ (non validées), le modèle v2 est déficitaire : l'EBITDA reste négatif sur les 5 années et la trésorerie devient négative. Point d'équilibre ≈ ", "⚠ With the (unapproved) starting assumptions the v2 model is loss-making: EBITDA stays negative over the 5 years and cash turns negative. Break-even occupancy ≈ "],
+  lossWarn2: [" d'occupation. À revoir avant de figer la Base : équipe, prix, contenu inclus.", " occupancy. To revisit before freezing the Base: staffing, prices, included content."],
+  assump: ["Taux d'occupation = hypothèse (non une prévision de demande)", "Occupancy = assumption (not a demand forecast)"],
+  oy: ["AE", "OY"], oyl: ["Année d'exploitation", "Operating year"], total: ["Total", "Total"], month: ["Mois", "Month"], week: ["Semaine", "Week"],
+  revHT: ["CA HT", "Revenue excl. VAT"], occ: ["Occupation", "Occupancy"], occWd: ["semaine", "weekday"], occWe: ["week-end", "weekend"],
+  ebitda: ["EBITDA", "EBITDA"], net: ["Résultat net", "Net result"], adr: ["Prix moyen / chambre (ADR, TTC)", "ADR (incl. VAT)"], revpar: ["RevPAR / TRevPAR (TTC)", "RevPAR / TRevPAR (incl. VAT)"],
+  lowCash: ["Point bas de trésorerie", "Cash low point"], closeCash: ["Trésorerie fin d'année", "Year-end cash"], be: ["Occupation d'équilibre", "Break-even occupancy"],
+  dscr: ["DSCR minimum", "Minimum DSCR"], margin: ["marge", "margin"], pkg: ["Forfaits", "Packages"], extras: ["Extras", "Extras"], costs: ["Charges", "Costs"],
+  cashCurve: ["Trésorerie hebdomadaire (clôture) et seuil de sécurité", "Weekly closing cash and safety buffer"], buffer: ["Seuil", "Buffer"],
+  monthlyRev: ["CA HT mensuel — forfaits et extras", "Monthly revenue excl. VAT — packages and extras"], unit: ["Économie unitaire", "Unit economics"],
+  perRN: ["par nuitée vendue", "per room-night sold"], perStay: ["par séjour", "per stay"], perAvail: ["par chambre disponible / nuit", "per available room-night"],
+  contrib: ["Contribution", "Contribution"], varc: ["Coûts variables", "Variable costs"], fees: ["Commissions & frais de carte", "Commissions & card fees"],
+  free: ["Séances freelance", "Freelance sessions"], fixed: ["Charges fixes", "Fixed costs"], payroll: ["Masse salariale chargée", "Loaded payroll"],
+  weekOf: ["sem.", "wk"], expandAll: ["Tout déplier", "Expand all"], collapseAll: ["Tout replier", "Collapse all"], addFree: ["＋ Ajouter un poste libre", "＋ Add a free position"],
+  position: ["Poste", "Position"], fte: ["ETP", "FTE"], grossM: ["Brut / mois", "Gross / month"], loadedM: ["Chargé / mois", "Loaded / month"], loadedY: ["Chargé / an", "Loaded / year"],
+  positions: ["postes", "positions"], team: ["Équipe (brut mensuel)", "Team (monthly gross)"], exc: ["Coûts directs des extras & commissions", "Extras direct costs & commissions"],
+  extrasCA: ["Extras — prix et taux de prise", "Extras — price and take-up"], ramp: ["Montée en charge AE1 (12 mois)", "OY1 ramp-up (12 months)"],
+  occCheck: ["Occupation résultante (contrôle C)", "Resulting occupancy (C check)"], segments: ["Segments (répartition des nuitées, informatif)", "Segments (room-night mix, informative)"],
+  channels: ["Canaux — part des réservations", "Channels — share of bookings"], chanCom: ["Canaux — commissions", "Channels — commissions"],
+  share: ["Part", "Share"], commission: ["Commission", "Commission"], price: ["Prix TTC", "Price incl. VAT"], attach: ["Taux de prise / client-séjour", "Take-up / guest-stay"],
+  dcost: ["Coût direct", "Direct cost"], resource: ["Ressource", "Resource"], wd: ["Semaine", "Weekday"], we: ["Week-end", "Weekend"],
+  priceSet: ["Jeu de prix", "Price set"], brief: ["Brief", "Brief"], holidays: ["Jours fériés (lecture seule, modifiables dans la Sheet)", "Public holidays (read-only, edit in the Sheet)"],
+  seasons: ["Saisons par mois (lecture seule)", "Seasons by month (read-only)"], dateNote: ["Les dates sont lues depuis la Sheet mais jamais publiées par l'application : modifiez-les dans v2_Hypotheses.", "Dates are read from the Sheet but never published by the app: edit them in v2_Hypotheses."],
+  rn: ["Nuitées-chambres", "Room-nights"], stays: ["Séjours", "Stays"], guests: ["Nuitées-clients", "Guest-nights"], alos: ["Durée moyenne", "ALOS"],
+  acq: ["Coût d'acquisition / séjour (marketing + commissions)", "Acquisition cost per stay (marketing + commissions)"],
+  lost: ["Extras perdus (capacité)", "Lost extras (capacity)"], qty: ["Quantité", "Quantity"], revTTC: ["CA TTC", "Revenue incl. VAT"], cost: ["Coût", "Cost"], marg: ["Marge", "Margin"],
+  base: ["Forfait de base", "Base package"], soloSup: ["Supplément individuel", "Single supplement"], suiteSup: ["Supplément suite", "Suite supplement"],
+  pkgTTC: ["Forfaits TTC", "Packages incl. VAT"], pkgHT: ["Forfaits HT", "Packages excl. VAT"], exTTC: ["Extras TTC", "Extras incl. VAT"], exHT: ["Extras HT", "Extras excl. VAT"],
+  calNote: ["Chambres occupées par nuit (0–5). Gris = fermeture technique, cadre or = jour férié, cadre violet = jour féminin. Cliquez un jour pour le détail.", "Rooms occupied per night (0–5). Grey = technical closure, gold frame = public holiday, violet frame = women-only day. Click a day for details."],
+  therapist: ["Soins / jour (capacité)", "Treatments / day (capacity)"], maxDem: ["Demande max. / jour", "Max demand / day"], bindT: ["Jours où la capacité de soins limite", "Days treatment capacity binds"],
+  bindV: ["Jours où le 4×4 limite", "Days the 4×4 binds"], sessions: ["Séances incluses", "Included sessions"], leadS: ["assurées par le référent", "delivered by the lead"],
+  freeS: ["assurées par des freelances", "delivered by freelancers"], dep: ["Dépendance au référent (cible ≤ 50 %)", "Reliance on the lead (target ≤ 50 %)"],
+  hoursRN: ["Heures de personnel / nuitée vendue", "Staff hours per room-night sold"], noCov: ["Matrice de couverture des postes : non modélisée dans cette version (voir CHANGELOG).", "Staff coverage matrix: not modelled in this version (see CHANGELOG)."],
+  rec: ["Encaissements", "Receipts"], depRec: ["dont acomptes", "of which deposits"], pays: ["Décaissements", "Payments"], vat: ["TVA", "VAT"], debt: ["Dette", "Debt"], capex: ["Travaux", "Capex"],
+  is: ["IS", "Corporate tax"], netw: ["Net", "Net"], close: ["Clôture", "Closing"], weeksBelow: ["semaines sous le seuil", "weeks below buffer"], all: ["Toutes", "All"],
+  cy: ["Années civiles", "Calendar years"], days: ["Jours", "Days"], debtServ: ["Service de la dette", "Debt service"], sched: ["Échéancier du crédit", "Loan schedule"],
+  date: ["Date", "Date"], interest: ["Intérêts", "Interest"], principal: ["Capital", "Principal"],
+  cmpNote: ["v1 = retraites féminines + location VVIP (cas bancaire, années civiles). v2 = séjours individuels (années d'exploitation dès l'ouverture). La v2 n'est pas présentée comme automatiquement plus rentable.", "v1 = women-only retreats + VVIP rental (bank case, calendar years). v2 = individual stays (operating years from opening). v2 is not presented as automatically more profitable."],
+  v1live: ["Lire la Base v1 en direct (API v1)", "Read v1 Base live (v1 API)"], scenTable: ["Comparaison des scénarios (Base courante + variante)", "Scenario comparison (current Base + variant)"],
+  promise: ["Promesse de service : une journée pleine à 1 chambre vs 5 chambres", "Service promise: one full day with 1 room vs 5 rooms"],
+  sens1: ["Sensibilité : occupation semaine × jeu de prix — EBITDA AE3 / point bas de trésorerie", "Sensitivity: weekday occupancy × price set — OY3 EBITDA / cash low point"],
+  sens2: ["Sensibilité : occupation week-end × variante d'équipe — EBITDA AE3", "Sensitivity: weekend occupancy × staffing variant — OY3 EBITDA"],
+  tornado: ["Tornade : EBITDA AE3 pour ±10 % sur chaque hypothèse", "Tornado: OY3 EBITDA for ±10 % on each assumption"], computing: ["Calcul en cours…", "Computing…"],
+  published: ["Publié : version ", "Published: version "], pubErr: ["Échec de la publication : ", "Publishing failed: "], syncErr: ["Synchronisation impossible : ", "Sync failed: "],
+  noEp: ["Renseignez l'URL /exec du script v2.", "Enter the v2 script /exec URL."], lastRead: ["Dernière lecture", "Last read"],
+  editLabHint: ["Libellés éditables (langue affichée). Les modifications sont surlignées puis publiées avec les valeurs.", "Labels are editable (displayed language). Changes are highlighted and published with the values."],
+  view: ["Vue", "View"], annual: ["Annuel", "Annual"], monthly: ["Mensuel", "Monthly"], seasonal: ["Renfort saisonnier", "Seasonal reinforcement"],
+  pole: ["Pôle", "Pole"], reconc: ["Rapprochement avec la masse salariale du modèle", "Reconciliation with model payroll"]
+};
+function t(k) { var v = TXT[k]; return v ? v[S.lang === "en" ? 1 : 0] : k; }
+function lab(o) { return o ? (S.lang === "en" ? (o.label_en || o.label_fr) : (o.label_fr || o.label_en)) : ""; }
+
+/* ---------------- formats ---------------- */
+function grp(n) { var s = String(Math.abs(Math.round(n))), out = "", sep = S.lang === "en" ? "," : " ";
+  while (s.length > 3) { out = sep + s.slice(-3) + out; s = s.slice(0, -3); } return (n < 0 && Math.round(n) !== 0 ? "−" : "") + s + out; }
+function nf(n, d) { if (n === null || n === undefined || isNaN(n)) return "–"; if (!d) return grp(n);
+  var f = Math.pow(10, d), r = Math.round(Math.abs(n) * f) / f, ip = Math.floor(r), dp = String(Math.round((r - ip) * f)); while (dp.length < d) dp = "0" + dp;
+  return (n < 0 && r > 0 ? "−" : "") + grp(ip) + (S.lang === "en" ? "." : ",") + dp; }
+function money(n) { if (n === null || n === undefined || isNaN(n)) return "–"; return S.lang === "en" ? "MAD " + nf(n) : nf(n) + " MAD"; }
+function kmad(n) { if (n === null || n === undefined || isNaN(n)) return "–"; var a = Math.abs(n);
+  if (a >= 1e6) return nf(n / 1e6, 2) + (S.lang === "en" ? " MMAD" : " MMAD"); if (a >= 1e4) return nf(n / 1e3, 0) + " kMAD"; return nf(n) + " MAD"; }
+function pct(x, d) { if (x === null || x === undefined || isNaN(x)) return "–"; return nf(x * 100, d === undefined ? 1 : d) + " %"; }
+function cls(n) { return n < -0.5 ? " neg" : ""; }
+function mname(m) { var fr = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."], en = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; return (S.lang === "en" ? en : fr)[m - 1]; }
+function fdate(iso) { if (!iso) return ""; var p = String(iso).slice(0, 10).split("-"); return S.lang === "en" ? p[0] + "-" + p[1] + "-" + p[2] : p[2] + "/" + p[1] + "/" + p[0]; }
+
+/* ---------------- working model ---------------- */
+function refPayload() { return S.sheet || BASE; }
+function initCur(src) { S.cur = { rows: clone(src.rows), sections: clone(src.sections || BASE.sections), tables: clone(src.tables) }; }
+function rowByKey(k) { for (var i = 0; i < S.cur.rows.length; i++) if (S.cur.rows[i].key === k) return S.cur.rows[i]; return null; }
+function pOf(rows) { var p = {}; for (var i = 0; i < rows.length; i++) p[rows[i].key] = rows[i].value; return p; }
+function sectionLabel(id) { var s = (S.cur.sections || {})[id] || (BASE.sections || {})[id];
+  if (id === "exc") return t("exc"); if (id === "team" && !s) return t("team"); return s ? s[S.lang === "en" ? 1 : 0] : id; }
+
+var SCEN = [
+  { id: "base", fr: "Base", en: "Base", d_fr: "Hypothèses courantes", d_en: "Current assumptions", f: function () { } },
+  { id: "wdweak", fr: "Semaine faible", en: "Weak weekdays", d_fr: "Occupation semaine × 0,6", d_en: "Weekday occupancy × 0.6", f: function (m) { m.p.occ_weekday *= 0.6; } },
+  { id: "slow", fr: "Démarrage lent", en: "Slow start", d_fr: "Montée en charge AE1 −30 %, AE2 à 75 %", d_en: "OY1 ramp −30 %, OY2 at 75 %", f: function (m) { for (var i = 0; i < m.t.ramp.length; i++) m.t.ramp[i].value *= 0.7; m.p.ramp_oy2 = 0.75; } },
+  { id: "solo", fr: "Solos élevés", en: "High solo share", d_fr: "Part individuelle 50 %", d_en: "Solo share 50 %", f: function (m) { m.p.solo_share = 0.5; } },
+  { id: "wehvy", fr: "Week-end concentré", en: "Weekend-heavy", d_fr: "Semaine 15 %, week-end 90 %", d_en: "Weekday 15 %, weekend 90 %", f: function (m) { m.p.occ_weekday = 0.15; m.p.occ_weekend = 0.9; } },
+  { id: "women", fr: "Jours féminins", en: "Women-only days", d_fr: "Mardi–mercredi féminins (demande éligible seulement)", d_en: "Tuesday–Wednesday women-only (eligible demand only)", f: function (m) { m.p.women_days = 1; } },
+  { id: "tech", fr: "Charges techniques +25 %", en: "Technical costs +25 %", d_fr: "Énergie, piscines, maintenance +25 %", d_en: "Energy, pools, maintenance +25 %", f: function (m) { m.p.tech_uplift = 0.25; } },
+  { id: "absence", fr: "Absence d'un intervenant", en: "Practitioner absence", d_fr: "8 semaines : remplaçants +50 %, demande −10 %", d_en: "8 weeks: replacement premium +50 %, demand −10 %", f: function (m) { m.p.absence_weeks = 8; m.p.absence_premium = 0.5; m.p.absence_demand_cut = 0.1; } },
+  { id: "pA", fr: "Prix A", en: "Price set A", d_fr: "2 500 / pers. / nuit (étude de marché)", d_en: "2,500 pp/night (market study)", f: function (m) { m.p.price_weekday_pp = 2500; m.p.price_weekend_pp = 2500; } },
+  { id: "pB", fr: "Prix B", en: "Price set B", d_fr: "3 000 / pers. / nuit", d_en: "3,000 pp/night", f: function (m) { m.p.price_weekday_pp = 3000; m.p.price_weekend_pp = 3000; } },
+  { id: "pC", fr: "Prix C", en: "Price set C", d_fr: "3 600 / pers. / nuit", d_en: "3,600 pp/night", f: function (m) { m.p.price_weekday_pp = 3600; m.p.price_weekend_pp = 3600; } }];
+function scenById(id) { for (var i = 0; i < SCEN.length; i++) if (SCEN[i].id === id) return SCEN[i]; return SCEN[0]; }
+function modelOf(src, scenId, extra) {
+  var m = { p: pOf(src.rows), t: clone(src.tables) };
+  scenById(scenId || "base").f(m); if (extra) extra(m); return m; }
+function recompute() { S.R = NurEngine.compute(modelOf(S.cur, S.scen)); S.scenCache = null; }
+
+/* ---------------- dirty tracking ---------------- */
+function diffCount() {
+  var ref = refPayload(), rm = {}, i, v = 0, l = 0;
+  for (i = 0; i < ref.rows.length; i++) rm[ref.rows[i].key] = ref.rows[i];
+  for (i = 0; i < S.cur.rows.length; i++) { var a = S.cur.rows[i], b = rm[a.key]; if (!b) { v++; continue; }
+    if (String(a.value) !== String(b.value)) v++; if (a.label_fr !== b.label_fr) l++; if (a.label_en !== b.label_en) l++; }
+  var tb = 0; for (var k in S.cur.tables) if (JSON.stringify(S.cur.tables[k]) !== JSON.stringify(ref.tables[k])) tb++;
+  return { v: v, l: l, t: tb, n: v + l + tb }; }
+function isChanged(key, field) { var ref = refPayload(); for (var i = 0; i < ref.rows.length; i++) if (ref.rows[i].key === key) { var a = rowByKey(key); return String(a[field]) !== String(ref.rows[i][field]); } return true; }
+function tChanged(tb, i, c) { var r = refPayload().tables[tb]; return !r || !r[i] || String(r[i][c]) !== String(S.cur.tables[tb][i][c]); }
+
+/* ---------------- sync / publish ---------------- */
+function setBusy(b, msg) { S.busy = b; var e = $("syncmsg"); if (e && msg !== undefined) e.innerHTML = msg; }
+function syncSheet(nocache) {
+  var ep = ($("ep") ? $("ep").value : S.ep).trim(); S.ep = ep; lsSet("ep", ep);
+  if (!ep) { setBusy(false, t("noEp")); return; }
+  var id = ++S.reqId; setBusy(true, "…");
+  fetch(ep + (ep.indexOf("?") < 0 ? "?" : "&") + "action=v2hypotheses" + (nocache ? "&nocache=1" : ""), { method: "GET", credentials: "omit" })
+    .then(function (r) { return r.json(); })
+    .then(function (d) { if (id !== S.reqId) return; // a late response never overwrites a newer read
+      if (!d || !d.ok || !d.rows) throw new Error((d && d.error) || "réponse invalide");
+      applySheet(d, false); lsSet("sheet", d); })
+    .catch(function (e) { if (id !== S.reqId) return; S.offline = true; setBusy(false, t("syncErr") + esc(e.message || e)); renderChrome(); });
+}
+function applySheet(d, fromCache) {
+  S.sheet = d; S.sheetAt = fromCache ? (d._at || null) : new Date().toISOString(); d._at = S.sheetAt; S.fromCache = !!fromCache; S.offline = false;
+  initCur(d); checkIntegrity(); recompute(); setBusy(false); render(); }
+function checkIntegrity() {
+  var src = S.sheet || (BASE.kpis ? BASE : null);
+  if (!src || !src.kpis) { S.integrity = null; return; }
+  var R0 = NurEngine.compute(modelOf(src, "base")), gaps = [];
+  for (var i = 0; i < CONTROL_KEYS.length; i++) { var k = CONTROL_KEYS[i], a = R0.controls[k], b = +src.kpis[k];
+    if (isNaN(b) || Math.abs(a - b) > 1) gaps.push({ k: k, app: a, sheet: b }); }
+  var nl = 0; for (i = 0; i < src.rows.length; i++) { if (src.rows[i].label_fr) nl++; if (src.rows[i].label_en) nl++; }
+  S.integrity = { ok: gaps.length === 0, gaps: gaps, labels: nl, values: src.rows.length, embedded: !S.sheet }; }
+function publish() {
+  if (!S.ep) { alertMsg(t("noEp")); return; }
+  var pw = window.prompt(t("pwPrompt")); if (!pw) return;
+  var label = window.prompt(t("verPrompt"), "App " + new Date().toISOString().slice(0, 16).replace("T", " ")) || "";
+  var rows = []; for (var i = 0; i < S.cur.rows.length; i++) { var r = S.cur.rows[i]; if (r.unit === "date") rows.push({ key: r.key, label_fr: r.label_fr, label_en: r.label_en });
+    else rows.push({ key: r.key, value: r.value, label_fr: r.label_fr, label_en: r.label_en }); }
+  var tables = {}; for (i = 0; i < WRITABLE_TABLES.length; i++) tables[WRITABLE_TABLES[i]] = S.cur.tables[WRITABLE_TABLES[i]];
+  sha256Hex(pw, function (h) {
+    setBusy(true, "…");
+    fetch(S.ep, { method: "POST", credentials: "omit", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ action: "v2publish", pwHash: h, rows: rows, tables: tables, label: label, author: "app" }) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (!d.ok) throw new Error(d.error || "?"); setBusy(false, t("published") + d.version); syncSheet(true); })
+      .catch(function (e) { setBusy(false, t("pubErr") + esc(e.message || e)); });
+  });
+}
+function alertMsg(m) { var e = $("syncmsg"); if (e) e.innerHTML = esc(m); }
+
+/* SHA-256 (ES5, UTF-8). Uses WebCrypto when available. */
+function sha256Hex(s, cb) {
+  try { if (window.crypto && window.crypto.subtle && window.TextEncoder) {
+    window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)).then(function (b) { var a = new Uint8Array(b), h = ""; for (var i = 0; i < a.length; i++) h += (a[i] < 16 ? "0" : "") + a[i].toString(16); cb(h); }, function () { cb(sha256js(s)); });
+    return; } } catch (e) { }
+  cb(sha256js(s)); }
+function sha256js(ascii) {
+  function rr(v, a) { return (v >>> a) | (v << (32 - a)); }
+  var str = unescape(encodeURIComponent(ascii)), i, j, K = [], H = [], p = 2, words = [], res = "";
+  for (var c = 0; K.length < 64; p++) { var isP = true; for (j = 2; j * j <= p; j++) if (p % j === 0) { isP = false; break; }
+    if (isP) { if (H.length < 8) H.push((Math.pow(p, 1 / 2) * 4294967296) | 0); K.push((Math.pow(p, 1 / 3) * 4294967296) | 0); } }
+  var bl = str.length * 8; str += "\x80"; while (str.length % 64 - 56) str += "\x00";
+  for (i = 0; i < str.length; i++) { j = str.charCodeAt(i); words[i >> 2] |= j << ((3 - i) % 4) * 8; }
+  words[words.length] = ((bl / 4294967296) | 0); words[words.length] = bl;
+  for (j = 0; j < words.length;) { var w = words.slice(j, j += 16), old = H; H = H.slice(0, 8);
+    for (i = 0; i < 64; i++) { var w15 = w[i - 15], w2 = w[i - 2], a = H[0], e = H[4];
+      var t1 = H[7] + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & H[5]) ^ ((~e) & H[6])) + K[i] +
+        (w[i] = (i < 16) ? w[i] : (w[i - 16] + (rr(w15, 7) ^ rr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rr(w2, 17) ^ rr(w2, 19) ^ (w2 >>> 10))) | 0);
+      var t2 = (rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & H[1]) ^ (a & H[2]) ^ (H[1] & H[2]));
+      H = [(t1 + t2) | 0].concat(H); H[4] = (H[4] + t1) | 0; H.length = 8; }
+    for (i = 0; i < 8; i++) H[i] = (H[i] + old[i]) | 0; }
+  for (i = 0; i < 8; i++) for (j = 3; j + 1; j--) { var b = (H[i] >> (j * 8)) & 255; res += (b < 16 ? "0" : "") + b.toString(16); }
+  return res; }
+
+/* Charts (inline SVG), chrome, dashboard */
+function niceMax(v) { if (v <= 0) return 1; var e = Math.pow(10, Math.floor(Math.log(v) / Math.LN10)), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e; }
+function axisRange(mins, maxs) { var lo = Math.min(0, mins), hi = Math.max(0, maxs), span = niceMax((hi - lo) || 1), step = span / 5;
+  lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step; if (hi === lo) hi = lo + step; return { lo: lo, hi: hi, step: step }; }
+function lineChart(o) {
+  var W = o.w || 900, H = o.h || 260, L = 78, Rm = 12, T = 12, B = 30, n = o.series[0].vals.length, i, s, mn = Infinity, mx = -Infinity;
+  for (s = 0; s < o.series.length; s++) for (i = 0; i < n; i++) { var v = o.series[s].vals[i]; if (v < mn) mn = v; if (v > mx) mx = v; }
+  var ax = axisRange(mn, mx), X = function (k) { return L + (W - L - Rm) * (n === 1 ? 0.5 : k / (n - 1)); }, Y = function (v) { return T + (H - T - B) * (1 - (v - ax.lo) / (ax.hi - ax.lo)); };
+  var g = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img">';
+  for (var y = ax.lo; y <= ax.hi + 1e-6; y += ax.step) g += '<line x1="' + L + '" x2="' + (W - Rm) + '" y1="' + Y(y) + '" y2="' + Y(y) + '" stroke="' + (Math.abs(y) < 1e-6 ? "#2B2622" : "#eee4d6") + '"/><text x="' + (L - 6) + '" y="' + (Y(y) + 4) + '" font-size="10" text-anchor="end" fill="#6f655c">' + kmad(y) + '</text>';
+  if (o.bands) for (i = 0; i < o.bands.length; i++) g += '<line x1="' + X(o.bands[i].at) + '" x2="' + X(o.bands[i].at) + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#E2D6C3" stroke-dasharray="3,3"/><text x="' + (X(o.bands[i].at) + 3) + '" y="' + (H - B + 14) + '" font-size="10" fill="#6f655c">' + esc(o.bands[i].label) + '</text>';
+  for (s = 0; s < o.series.length; s++) { var d = ""; for (i = 0; i < n; i++) d += (i ? "L" : "M") + X(i).toFixed(1) + "," + Y(o.series[s].vals[i]).toFixed(1);
+    g += '<path d="' + d + '" fill="none" stroke="' + o.series[s].color + '" stroke-width="' + (o.series[s].dash ? 1.5 : 2) + '"' + (o.series[s].dash ? ' stroke-dasharray="6,4"' : "") + '/>'; }
+  var bw = (W - L - Rm) / n;
+  for (i = 0; i < n; i++) g += '<rect x="' + (X(i) - bw / 2) + '" y="' + T + '" width="' + bw + '" height="' + (H - T - B) + '" fill="transparent" data-tip="' + esc(o.tip(i)) + '"/>';
+  return g + "</svg>" + legend(o.series); }
+function barChart(o) {
+  var W = o.w || 900, H = o.h || 240, L = 78, Rm = 12, T = 12, B = 34, n = o.cats.length, i, s, mx = 0, mn = 0;
+  for (i = 0; i < n; i++) { var p = 0, q = 0; for (s = 0; s < o.series.length; s++) { var v = o.series[s].vals[i]; if (v > 0) p += v; else q += v; } if (p > mx) mx = p; if (q < mn) mn = q; }
+  var ax = axisRange(mn, mx), Y = function (v) { return T + (H - T - B) * (1 - (v - ax.lo) / (ax.hi - ax.lo)); }, bw = (W - L - Rm) / n;
+  var g = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img">';
+  for (var y = ax.lo; y <= ax.hi + 1e-6; y += ax.step) g += '<line x1="' + L + '" x2="' + (W - Rm) + '" y1="' + Y(y) + '" y2="' + Y(y) + '" stroke="' + (Math.abs(y) < 1e-6 ? "#2B2622" : "#eee4d6") + '"/><text x="' + (L - 6) + '" y="' + (Y(y) + 4) + '" font-size="10" text-anchor="end" fill="#6f655c">' + kmad(y) + '</text>';
+  for (i = 0; i < n; i++) { var up = 0, dn = 0, x = L + bw * i + bw * 0.15, tip = o.cats[i];
+    for (s = 0; s < o.series.length; s++) { var v2 = o.series[s].vals[i], y0, y1; tip += " · " + o.series[s].name + " " + money(v2);
+      if (v2 >= 0) { y0 = Y(up + v2); y1 = Y(up); up += v2; } else { y0 = Y(dn); y1 = Y(dn + v2); dn += v2; }
+      g += '<rect x="' + x + '" y="' + y0 + '" width="' + bw * 0.7 + '" height="' + Math.max(0, y1 - y0) + '" fill="' + o.series[s].color + '" data-tip="' + esc(tip) + '"/>'; }
+    g += '<text x="' + (x + bw * 0.35) + '" y="' + (H - B + 14) + '" font-size="10" text-anchor="middle" fill="#6f655c">' + esc(o.cats[i]) + '</text>'; }
+  return g + "</svg>" + legend(o.series); }
+function legend(series) { var h = '<div class="legend">'; for (var i = 0; i < series.length; i++) h += '<span><i class="sw" style="background:' + series[i].color + '"></i>' + esc(series[i].name) + "</span>"; return h + "</div>"; }
+
+/* ---------------- chrome ---------------- */
+var TABS = ["dash", "hyp", "cal", "dem", "rev", "cost", "team", "cash", "proj", "cmp", "scen"];
+function badges() {
+  var h = "", dc = diffCount();
+  if (!S.sheet) h += '<span class="badge b-local">' + t("b_local") + "</span> ";
+  else h += '<span class="badge b-sheet">SHEET v' + esc(S.sheet.version) + "</span> ";
+  if (S.fromCache) h += '<span class="badge b-cache">' + t("b_cache") + "</span> ";
+  if (S.offline) h += '<span class="badge b-off">' + t("b_off") + "</span> ";
+  if (dc.n > 0 || S.scen !== "base") h += '<span class="badge b-sand inv-hide">' + t("b_sand") + (dc.n ? " · " + dc.n : "") + "</span>";
+  return h; }
+function renderChrome() {
+  document.documentElement.lang = S.lang; document.body.className = S.investor ? "inv" : "";
+  $("hdr").innerHTML = '<div class="logo"></div><div><h1>' + t("title") + '</h1><div class="sub">' + t("subtitle") + " · " + APP_VERSION + "</div></div>" +
+    '<div class="sp"></div><span id="badges">' + badges() + "</span>" +
+    '<button class="btn" data-act="lang">' + (S.lang === "fr" ? "EN" : "FR") + "</button>" +
+    '<button class="btn' + (S.investor ? " on" : "") + '" data-act="investor">' + t("investor") + "</button>" +
+    '<button class="btn inv-hide" data-act="json">' + t("exportJ") + '</button><button class="btn" data-act="csv">' + t("exportC") + "</button>" +
+    '<button class="btn" data-act="print">' + t("print") + "</button>";
+  var sc = '<b>' + t("scenario") + " :</b> ";
+  for (var i = 0; i < SCEN.length; i++) sc += '<span class="chip' + (S.scen === SCEN[i].id ? " on" : "") + '" data-scen="' + SCEN[i].id + '">' + esc(SCEN[i][S.lang]) + "</span>";
+  var cs = scenById(S.scen); sc += '<span class="desc">' + esc(cs["d_" + S.lang]) + "</span>";
+  $("scen").innerHTML = sc; $("scen").style.display = S.investor ? "none" : "";
+  var b = "";
+  if (S.integrity && S.integrity.embedded) { if (S.integrity.ok) b += '<div class="okb">' + t("embOk") + esc(BASE.readAt || "") + t("embOk2") + " · " + S.integrity.values + " " + t("vals") + " · " + S.integrity.labels + " " + t("labs") + "</div>"; }
+  else if (S.integrity) { if (S.integrity.ok) b += '<div class="okb">' + t("intOk") + " · SHEET v" + esc(S.sheet.version) + " · " + S.integrity.values + " " + t("vals") + " · " + S.integrity.labels + " " + t("labs") + "</div>";
+    else { b += '<div class="kob">' + t("intKo") + " : "; for (i = 0; i < S.integrity.gaps.length; i++) { var gp = S.integrity.gaps[i]; b += esc(gp.k) + " app " + money(gp.app) + " / Sheet " + money(gp.sheet) + (i < S.integrity.gaps.length - 1 ? " · " : ""); } b += "</div>"; } }
+  $("banners").innerHTML = b;
+  var tb = ""; for (i = 0; i < TABS.length; i++) tb += '<div class="tab' + (S.tab === TABS[i] ? " on" : "") + '" data-tab="' + TABS[i] + '">' + t("t_" + TABS[i]) + "</div>";
+  $("tabs").innerHTML = tb; }
+function render() { renderChrome(); renderMain(); saveLocal(); }
+function renderMain() {
+  var y = window.scrollY || 0, h = '<div class="printhead">' + esc(t("title")) + " · " + esc(scenById(S.scen)[S.lang]) + " · " + (S.sheet ? "SHEET v" + esc(S.sheet.version) : t("b_local")) + " · " + new Date().toISOString().slice(0, 16).replace("T", " ") + "</div>";
+  $("main").innerHTML = h + TABFN[S.tab](); if (S.tab === "scen") setTimeout(fillScen, 30); window.scrollTo(0, y); }
+function saveLocal() { lsSet("state", { lang: S.lang, tab: S.tab, sub: S.sub, oy: S.oy, scen: S.scen, investor: S.investor, open: S.open, cur: S.cur, curRef: S.sheet ? S.sheet.version : "local:" + BASE.version }); }
+function oySel() { var h = '<div class="oysel"><b>' + t("oyl") + " :</b> "; for (var i = 1; i <= 5; i++) h += '<span class="chip' + (S.oy === i ? " on" : "") + '" data-oy="' + i + '">' + t("oy") + i + "</span>"; return h + "</div>"; }
+function kpi(l, v, s, neg) { return '<div class="kpi"><div class="l">' + l + '</div><div class="v' + (neg ? " neg" : "") + '">' + v + '</div><div class="s">' + (s || "") + "</div></div>"; }
+function minDscr() { var m = null, y = 0; for (var i = 0; i < 5; i++) { var d = S.R.oy[i].dscr; if (d !== null && (m === null || d < m)) { m = d; y = i + 1; } } return { v: m, y: y }; }
+function lossBanner() {
+  var R = S.R, i, neg = [], low = [], parts = [];
+  for (i = 0; i < 5; i++) { if (R.oy[i].ebitda < 0) neg.push(t("oy") + (i + 1)); if (R.oy[i].dscr !== null && R.oy[i].dscr < 1.2) low.push(t("oy") + (i + 1)); }
+  if (neg.length) parts.push(t("wEbitda") + neg.join(", "));
+  if (R.controls.low_cash < 0) parts.push(t("wCash") + kmad(R.controls.low_cash) + ")");
+  if (low.length) parts.push(t("wDscr") + low.join(", "));
+  if (!parts.length) return "";
+  parts.push(t("wBe") + pct(R.oy[2].breakEvenOcc, 0) + " vs " + pct(R.oy[2].occupancy, 0));
+  return '<div class="warn">' + t("warnHead") + parts.join(" · ") + t("wEnd") + "</div>"; }
+function monthsOf(R, oy) { // monthly aggregates from the day ledger
+  var D = R.days, out = [], idx = {}, i;
+  for (i = 0; i < R.N; i++) { if (oy && D.oy[i] !== oy) continue; var k = D.date[i].slice(0, 7);
+    if (idx[k] === undefined) { idx[k] = out.length; out.push({ k: k, y: +k.slice(0, 4), m: +k.slice(5, 7), rn: 0, cap: 0, rnWd: 0, capWd: 0, rnWe: 0, capWe: 0, stays: 0, guests: 0, pkgHT: 0, exHT: 0, cost: 0, rec: 0 }); }
+    var o = out[idx[k]]; o.rn += D.rn[i]; o.cap += R.rooms; if (D.type[i] === "wd") { o.rnWd += D.rn[i]; o.capWd += R.rooms; } else { o.rnWe += D.rn[i]; o.capWe += R.rooms; }
+    o.stays += D.stays[i]; o.guests += D.guests[i]; o.pkgHT += D.pkgHT[i]; o.exHT += D.exHT[i]; o.rec += D.rec[i];
+    o.cost += D.fees[i] + D.varCost[i] + D.freelance[i] + D.payroll[i] + D.opex[i] + D.mkt[i] + D.ins[i] + D.tax[i] + D.ffe[i]; }
+  return out; }
+
+var TABFN = {};
+TABFN.dash = function () {
+  var R = S.R, o = R.oy[S.oy - 1], md = minDscr(), h = lossBanner() + oySel();
+  h += '<div class="grid k8">' +
+    kpi(t("revHT"), kmad(o.revHT), t("pkg") + " " + kmad(o.pkgHT) + " · " + t("extras") + " " + kmad(o.exHT)) +
+    kpi(t("occ"), pct(o.occupancy), t("occWd") + " " + pct(o.occWd) + " · " + t("occWe") + " " + pct(o.occWe) + '<br><span class="tag tH">H</span> ' + t("assump")) +
+    kpi(t("adr"), money(o.adr), nf(o.rn) + " " + t("rn").toLowerCase()) +
+    kpi(t("revpar"), money(o.revpar) + " / " + nf(o.trevpar), "") +
+    kpi(t("ebitda"), kmad(o.ebitda), t("margin") + " " + pct(o.revHT ? o.ebitda / o.revHT : null), o.ebitda < 0) +
+    kpi(t("net"), kmad(o.net), "", o.net < 0) +
+    kpi(t("lowCash"), kmad(o.lowCash), t("week") + " " + o.lowWeek + " · " + o.weeksBelow + " " + t("weeksBelow"), o.lowCash < 0) +
+    kpi(t("closeCash"), kmad(o.closeCash), t("week") + " " + (52 * S.oy), o.closeCash < 0) +
+    kpi(t("be"), pct(o.breakEvenOcc, 0), t("occ") + " " + pct(o.occupancy, 0)) +
+    kpi(t("dscr"), md.v === null ? "–" : nf(md.v, 2), md.v === null ? "" : t("oy") + md.y, md.v !== null && md.v < 1.2) + "</div>";
+  var W = R.weeks, vals = [], buf = [], bands = [], i; for (i = 0; i < W.length; i++) { vals.push(W[i].close); buf.push(modelOf(S.cur, S.scen).p.cash_buffer); }
+  for (i = 0; i < 5; i++) bands.push({ at: 52 * i, label: t("oy") + (i + 1) });
+  h += '<div class="card"><h2>' + t("cashCurve") + "</h2>" + lineChart({ series: [{ name: t("close"), color: "#2B2622", vals: vals }, { name: t("buffer"), color: "#B8912F", vals: buf, dash: 1 }], bands: bands,
+    tip: function (k) { return t("week") + " " + W[k].week + " (" + fdate(W[k].start) + ") · " + t("close") + " " + money(W[k].close) + " · " + t("rec") + " " + money(W[k].rec) + " · " + t("pays") + " " + money(W[k].pay); } }) + "</div>";
+  var M = monthsOf(R, S.oy), cats = [], a = [], b = [];
+  for (i = 0; i < M.length; i++) { cats.push(mname(M[i].m) + " " + String(M[i].y).slice(2)); a.push(M[i].pkgHT); b.push(M[i].exHT); }
+  h += '<div class="two"><div class="card"><h2>' + t("monthlyRev") + " — " + t("oy") + S.oy + "</h2>" + barChart({ w: 620, cats: cats, series: [{ name: t("pkg"), color: "#B4552F", vals: a }, { name: t("extras"), color: "#2a78d6", vals: b }] }) + "</div>";
+  var cpr = o.rn ? o.contribution / o.rn : 0, fixedDay = o.fixed / 364;
+  h += '<div class="card"><h2>' + t("unit") + " — " + t("oy") + S.oy + '</h2><table><tr><th></th><th class="n">' + t("perRN") + '</th><th class="n">' + t("perStay") + "</th></tr>" +
+    ur(t("revHT"), o.revHT, o) + ur(t("fees"), -o.fees, o) + ur(t("varc"), -o.varCost, o) + ur(t("free"), -o.freelance, o) + ur(t("contrib"), o.contribution, o, 1) +
+    "</table><p class=\"note\">" + t("contrib") + " " + t("perAvail") + " : <b>" + money(o.contribPerAvailRoom) + "</b> · " + t("fixed") + " / " + (S.lang === "en" ? "day" : "jour") + " : <b>" + money(fixedDay) + "</b> → " +
+    t("be") + " <b>" + pct(o.breakEvenOcc, 0) + "</b> (" + nf(cpr ? fixedDay / cpr : 0, 1) + (S.lang === "en" ? " rooms/night" : " chambres/nuit") + ")</p></div></div>";
+  return h; };
+function ur(l, v, o, tot) { return '<tr' + (tot ? ' class="tot"' : "") + "><td>" + l + '</td><td class="n' + cls(v) + '">' + money(o.rn ? v / o.rn : 0) + '</td><td class="n' + cls(v) + '">' + money(o.stays ? v / o.stays : 0) + "</td></tr>"; }
+
+/* Hypothèses tab: two pages (CA / charges), sync panel, labels, grouped team */
+var PCT_UNITS = { "%": 1 };
+function dispVal(r) { if (r.unit === "%") return String(Math.round(r.value * 1e6) / 1e4); return r.value; }
+function tagS(s) { return s ? '<span class="tag t' + esc(s) + '">' + esc(s) + "</span>" : ""; }
+function syncPanel() {
+  var dc = diffCount(), sh = S.sheet, nl = 0, i;
+  if (sh) for (i = 0; i < sh.rows.length; i++) { if (sh.rows[i].label_fr) nl++; if (sh.rows[i].label_en) nl++; }
+  return '<div class="card sync inv-hide"><h2>' + t("src") + '</h2><div class="syncrow"><span id="badges2">' + badges() + '</span><input id="ep" placeholder="' + esc(t("epPh")) + '" value="' + esc(S.ep) + '">' +
+    '<button class="btn l" data-act="sync">' + t("sync") + '</button><button class="btn l' + (S.editLabels ? " on" : "") + '" data-act="labels">' + (S.editLabels ? t("editLoff") : t("editL")) + "</button>" +
+    '<button class="btn l" data-act="publish">' + t("publish") + '</button><button class="btn l" data-act="reset">' + t("reset") + "</button></div>" +
+    '<div class="note">' + (sh ? t("lastRead") + " : " + esc(String(S.sheetAt || "").slice(0, 16).replace("T", " ")) + " · SHEET v" + esc(sh.version) + " · " + sh.rows.length + " " + t("vals") + " · " + nl + " " + t("labs") + " " + t("readFrom") : t("never")) +
+    ' · <span id="dcount">' + dcText(dc) + '</span></div><div class="note" id="syncmsg"></div>' + (S.editLabels ? '<div class="note">' + t("editLabHint") + "</div>" : "") + "</div>"; }
+function dcText(dc) { return dc.n ? "<b>" + dc.n + " " + t("unpub") + "</b> (" + dc.v + " " + t("vals") + ", " + dc.l + " " + (S.lang === "en" ? "labels" : "libellés") + ", " + dc.t + " tables)" : "0 " + t("unpub"); }
+function hypLiveInner() { var R = S.R, o1 = R.oy[0], o3 = R.oy[2];
+  return "<span>" + t("revHT") + " " + t("oy") + "1 <b>" + kmad(o1.revHT) + "</b></span><span>" + t("occ") + " " + t("oy") + "1 <b>" + pct(o1.occupancy) + "</b></span><span>EBITDA " + t("oy") + "1 <b class=\"" + cls(o1.ebitda) + "\">" + kmad(o1.ebitda) +
+    "</b></span><span>EBITDA " + t("oy") + "3 <b class=\"" + cls(o3.ebitda) + "\">" + kmad(o3.ebitda) + "</b></span><span>" + t("be") + " " + t("oy") + "3 <b>" + pct(o3.breakEvenOcc, 0) + "</b></span><span>" + t("lowCash") + " <b class=\"" + cls(R.controls.low_cash) + "\">" + kmad(R.controls.low_cash) + "</b></span>" +
+    (S.scen !== "base" ? '<span class="pill">' + t("scenario") + " : " + esc(scenById(S.scen)[S.lang]) + "</span>" : ""); }
+function fieldRow(r) {
+  var ch = isChanged(r.key, "value") ? " chg" : "", lc = isChanged(r.key, "label_" + S.lang) ? " chg" : "", inp;
+  if (r.unit === "date") inp = '<input type="date" data-k="' + r.key + '" value="' + esc(String(r.value).slice(0, 10)) + '" class="' + ch + '" style="width:130px">';
+  else if (r.unit === "0/1") inp = '<input type="checkbox" data-k="' + r.key + '"' + (+r.value ? " checked" : "") + ">";
+  else inp = '<input data-k="' + r.key + '" value="' + esc(dispVal(r)) + '" class="' + ch + '" inputmode="decimal">';
+  var l = S.editLabels ? '<input class="lbl' + lc + '" data-l="' + r.key + '" value="' + esc(lab(r)) + '">' : '<span class="lab">' + esc(lab(r)) + "</span>";
+  return '<div class="f"><label>' + l + tagS(r.status) + (r.source ? '<span class="src inv-hide" title="' + esc(r.source) + '">ⓘ</span>' : "") + "</label>" + inp + '<span class="unit">' + esc(r.unit === "%" ? "%" : r.unit === "0/1" ? "" : r.unit) + "</span></div>"; }
+function rowsOf(page, sec) { var out = []; for (var i = 0; i < S.cur.rows.length; i++) { var r = S.cur.rows[i]; if (r.page === page && r.section === sec) out.push(r); } return out; }
+function tInput(tb, i, c, pctv, w) { var v = S.cur.tables[tb][i][c], dv = pctv ? Math.round(v * 1e6) / 1e4 : v;
+  return '<input class="mini' + (tChanged(tb, i, c) ? " chg" : "") + '" data-t="' + tb + '" data-i="' + i + '" data-c="' + c + '"' + (pctv ? ' data-p="1"' : "") + ' value="' + esc(dv) + '"' + (w ? ' style="width:' + w + 'px"' : "") + ">"; }
+function tLabel(tb, i) { var r = S.cur.tables[tb][i];
+  if (S.editLabels || (tb === "roster" && r.pole === "free")) return '<input class="lbl' + (tChanged(tb, i, "label_" + S.lang) ? " chg" : "") + '" data-t="' + tb + '" data-i="' + i + '" data-c="label_' + S.lang + '" value="' + esc(lab(r)) + '">';
+  return esc(lab(r)); }
+function occCheckInner() { var h = "<b>" + t("occCheck") + "</b> "; for (var i = 0; i < 3; i++) { var o = S.R.oy[i]; h += " · " + t("oy") + (i + 1) + " " + pct(o.occupancy) + " (" + t("occWd") + " " + pct(o.occWd) + ", " + t("occWe") + " " + pct(o.occWe) + ")"; } return h + ' <span class="tag tC">C</span>'; }
+function sectionExtra(page, sec) {
+  var h = "", i, T = S.cur.tables;
+  if (sec === "cal") {
+    h += '<p class="note">' + t("dateNote") + "</p><details><summary class=\"note\">" + t("seasons") + "</summary><table>";
+    for (i = 0; i < T.seasons.length; i++) h += "<tr><td>" + esc(lab(T.seasons[i])) + "</td><td>" + esc(T.seasons[i].season) + "</td></tr>";
+    h += "</table></details><details><summary class=\"note\">" + t("holidays") + " (" + T.holidays.length + ")</summary><div class=\"scroll\" style=\"max-height:240px\"><table>";
+    for (i = 0; i < T.holidays.length; i++) h += "<tr><td>" + fdate(T.holidays[i].date) + "</td><td>" + esc(lab(T.holidays[i])) + (+T.holidays[i].approx ? ' <span class="tag tH">≈</span>' : "") + "</td></tr>";
+    h += "</table></div></details>"; }
+  if (sec === "occ") { h += '<div class="sub">' + t("ramp") + ' <span class="tag tH">H</span></div><div class="ramp">';
+    for (i = 0; i < T.ramp.length; i++) h += "<label>" + (S.editLabels ? tLabel("ramp", i) : esc(lab(T.ramp[i]))) + tInput("ramp", i, "value", 1) + "</label>";
+    h += '</div><div class="ccheck" id="occcheck">' + occCheckInner() + "</div>"; }
+  if (sec === "price") { h += '<div class="sub">' + t("priceSet") + '</div><div class="teambar">';
+    var ps = [["brief", t("brief")], ["A", "A · 2 500"], ["B", "B · 3 000"], ["C", "C · 3 600"]];
+    for (i = 0; i < ps.length; i++) h += '<button class="btn l" data-pset="' + ps[i][0] + '">' + ps[i][1] + "</button>"; h += "</div>"; }
+  if (sec === "stay") { var sw = 0, se = 0; h += '<div class="sub">' + t("segments") + "</div><table><tr><th></th><th class=\"n\">" + t("wd") + '</th><th class="n">' + t("we") + "</th></tr>";
+    for (i = 0; i < T.segments.length; i++) { sw += +T.segments[i].wd; se += +T.segments[i].we; h += "<tr><td>" + tLabel("segments", i) + '</td><td class="n">' + tInput("segments", i, "wd", 1) + '</td><td class="n">' + tInput("segments", i, "we", 1) + "</td></tr>"; }
+    h += '<tr class="tot"><td>' + t("total") + '</td><td class="n' + (Math.abs(sw - 1) > 1e-6 ? " neg" : "") + '">' + pct(sw, 0) + '</td><td class="n' + (Math.abs(se - 1) > 1e-6 ? " neg" : "") + '">' + pct(se, 0) + "</td></tr></table>"; }
+  if (sec === "cash") { var sc = 0; h += '<div class="sub">' + t("channels") + "</div><table>";
+    for (i = 0; i < T.channels.length; i++) { sc += +T.channels[i].share; h += "<tr><td>" + tLabel("channels", i) + '</td><td class="n">' + tInput("channels", i, "share", 1) + " %</td></tr>"; }
+    h += '<tr class="tot"><td>' + t("total") + '</td><td class="n' + (Math.abs(sc - 1) > 1e-6 ? " neg" : "") + '">' + pct(sc, 0) + "</td></tr></table>"; }
+  return h; }
+function extrasCard(page) { var T = S.cur.tables, i, h = '<div class="card"><h2>' + (page === "ca" ? t("extrasCA") : t("exc")) + "</h2><table><tr><th></th>";
+  if (page === "ca") { h += '<th class="n">' + t("price") + '</th><th class="n">' + t("attach") + " (%)</th></tr>";
+    for (i = 0; i < T.extras.length; i++) h += "<tr><td>" + tLabel("extras", i) + '</td><td class="n">' + tInput("extras", i, "price") + '</td><td class="n">' + tInput("extras", i, "attach", 1) + "</td></tr>"; }
+  else { h += '<th class="n">' + t("dcost") + "</th><th>" + t("resource") + "</th></tr>";
+    for (i = 0; i < T.extras.length; i++) h += "<tr><td>" + esc(lab(T.extras[i])) + '</td><td class="n">' + tInput("extras", i, "cost") + "</td><td>" + resSel(i) + "</td></tr>";
+    h += '</table><div class="sub">' + t("chanCom") + "</div><table>";
+    for (i = 0; i < T.channels.length; i++) h += "<tr><td>" + esc(lab(T.channels[i])) + '</td><td class="n">' + tInput("channels", i, "commission", 1) + " %</td></tr>"; }
+  return h + "</table></div>"; }
+function resSel(i) { var v = S.cur.tables.extras[i].resource, o = ["none", "therapist", "vehicle"], h = '<select data-t="extras" data-i="' + i + '" data-c="resource">';
+  for (var k = 0; k < o.length; k++) h += "<option" + (o[k] === v ? " selected" : "") + ">" + o[k] + "</option>"; return h + "</select>"; }
+function poleList() { var P = S.cur.tables.poles.slice(), seen = {}, i; for (i = 0; i < P.length; i++) seen[P[i].id] = 1;
+  var R = S.cur.tables.roster; for (i = 0; i < R.length; i++) if (!seen[R[i].pole]) { seen[R[i].pole] = 1; P.push({ id: R[i].pole, label_fr: R[i].pole, label_en: R[i].pole }); } return P; }
+function loadF() { var p = pOf(S.cur.rows); return (1 + (+p.employer_rate)) * (1 + (+p.leave_cover)); }
+function teamTotals() { var R = S.cur.tables.roster, f = loadF(), out = { all: { fte: 0, g: 0 } }, i;
+  for (i = 0; i < R.length; i++) { var p = R[i].pole, fte = +R[i].fte || 0, g = fte * (+R[i].gross || 0); if (!out[p]) out[p] = { fte: 0, g: 0, n: 0 }; out[p].fte += fte; out[p].g += g; out[p].n++; out.all.fte += fte; out.all.g += g; }
+  out.f = f; return out; }
+function teamCard() {
+  var P = poleList(), R = S.cur.tables.roster, tt = teamTotals(), f = tt.f, h = '<div class="card"><h2>' + t("team") + "</h2>", i, j;
+  for (i = 0; i < S.cur.rows.length; i++) if (S.cur.rows[i].section === "team") h += fieldRow(S.cur.rows[i]);
+  h += '<div class="teambar"><button class="btn l" data-act="expand">' + t("expandAll") + '</button><button class="btn l" data-act="collapse">' + t("collapseAll") + '</button><button class="btn l" data-act="addfree">' + t("addFree") + "</button></div>";
+  h += '<table class="team"><tr><th>' + t("position") + '</th><th class="n">' + t("fte") + '</th><th class="n">' + t("grossM") + '</th><th class="n">' + t("loadedM") + '</th><th class="n">' + t("loadedY") + "</th></tr>";
+  for (j = 0; j < P.length; j++) { var p = P[j], s = tt[p.id] || { fte: 0, g: 0, n: 0 }, op = S.open[p.id] !== false;
+    h += '<tr class="grp" data-grp="' + esc(p.id) + '"><td><span class="tog">' + (op ? "−" : "+") + "</span>" + (S.editLabels ? tLabel("poles", j < S.cur.tables.poles.length ? j : 0) : esc(lab(p))) + ' <span class="muted">(' + s.n + " " + t("positions") + ')</span></td><td class="n" id="pf_' + p.id + '">' + nf(s.fte, 1) +
+      '</td><td class="n" id="pg_' + p.id + '">' + nf(s.g) + '</td><td class="n" id="pl_' + p.id + '">' + nf(s.g * f, 2) + '</td><td class="n" id="py_' + p.id + '">' + nf(s.g * f * 12) + "</td></tr>";
+    if (!op) continue;
+    for (i = 0; i < R.length; i++) if (R[i].pole === p.id) { var g = (+R[i].fte || 0) * (+R[i].gross || 0);
+      h += '<tr><td style="padding-left:28px">' + tLabel("roster", i) + '</td><td class="n">' + tInput("roster", i, "fte", 0, 50) + '</td><td class="n">' + tInput("roster", i, "gross", 0, 80) + '</td><td class="n" id="rl_' + i + '">' + nf(g * f, 2) + '</td><td class="n" id="ry_' + i + '">' + nf(g * f * 12) + "</td></tr>"; } }
+  h += '<tr class="tot"><td>' + t("total") + '</td><td class="n" id="tf">' + nf(tt.all.fte, 1) + '</td><td class="n" id="tg">' + nf(tt.all.g) + '</td><td class="n" id="tl">' + nf(tt.all.g * f, 2) + '</td><td class="n" id="ty">' + nf(tt.all.g * f * 12, 2) + "</td></tr></table>";
+  return h + '<p class="note">' + (S.lang === "en" ? "Loaded = gross × (1 + employer charges) × (1 + leave cover); OY1 prices, indexed from OY2. Free positions with FTE 0 have no effect." : "Chargé = brut × (1 + charges patronales) × (1 + couverture congés) ; valeurs AE1, indexées dès l'AE2. Un poste libre à 0 ETP est sans effet.") + "</p></div>"; }
+function updateTeam() { var tt = teamTotals(), f = tt.f, P = poleList(), R = S.cur.tables.roster, i;
+  function st(id, v) { var e = $(id); if (e) e.innerHTML = v; }
+  for (i = 0; i < P.length; i++) { var s = tt[P[i].id] || { fte: 0, g: 0 }; st("pf_" + P[i].id, nf(s.fte, 1)); st("pg_" + P[i].id, nf(s.g)); st("pl_" + P[i].id, nf(s.g * f, 2)); st("py_" + P[i].id, nf(s.g * f * 12)); }
+  for (i = 0; i < R.length; i++) { var g = (+R[i].fte || 0) * (+R[i].gross || 0); st("rl_" + i, nf(g * f, 2)); st("ry_" + i, nf(g * f * 12)); }
+  st("tf", nf(tt.all.fte, 1)); st("tg", nf(tt.all.g)); st("tl", nf(tt.all.g * f, 2)); st("ty", nf(tt.all.g * f * 12, 2)); }
+TABFN.hyp = function () {
+  var pg = S.sub, h = syncPanel() + '<div class="hlive" id="hlive">' + hypLiveInner() + "</div>";
+  h += '<div class="subtabs"><span class="stab' + (pg === "ca" ? " on" : "") + '" data-sub="ca">' + t("p_ca") + '</span><span class="stab' + (pg === "ch" ? " on" : "") + '" data-sub="ch">' + t("p_ch") + "</span></div>";
+  var secs = PAGE_SECTIONS[pg]; h += '<div class="hyp">';
+  for (var i = 0; i < secs.length; i++) { var sec = secs[i];
+    if (sec === "team") { h += "</div>" + teamCard() + '<div class="hyp mt">'; continue; }
+    if (sec === "exc") { h += extrasCard("ch"); continue; }
+    var rows = rowsOf(pg, sec); if (!rows.length && !sectionExtra(pg, sec)) continue;
+    h += '<div class="card"><h2>' + esc(sectionLabel(sec)) + "</h2>"; for (var j = 0; j < rows.length; j++) h += fieldRow(rows[j]); h += sectionExtra(pg, sec) + "</div>"; }
+  if (pg === "ca") h += extrasCard("ca");
+  // rows whose page/section is not in the standard layout (added in the Sheet) are still shown
+  var other = []; for (i = 0; i < S.cur.rows.length; i++) { var r = S.cur.rows[i]; if (r.page === pg && PAGE_SECTIONS[pg].indexOf(r.section) < 0) other.push(r); }
+  if (other.length) { h += '<div class="card"><h2>' + (S.lang === "en" ? "Other" : "Autres") + "</h2>"; for (i = 0; i < other.length; i++) h += fieldRow(other[i]); h += "</div>"; }
+  return h + "</div>"; };
+function updateHypLive() { var e = $("hlive"); if (e) e.innerHTML = hypLiveInner(); e = $("occcheck"); if (e) e.innerHTML = occCheckInner(); updateTeam();
+  e = $("badges"); if (e) e.innerHTML = badges(); e = $("badges2"); if (e) e.innerHTML = badges(); e = $("dcount"); if (e) e.innerHTML = dcText(diffCount()); }
+
+/* Calendar, demand, revenue, costs, team & capacity, cash, projection */
+TABFN.cal = function () {
+  var R = S.R, D = R.days, p = modelOf(S.cur, S.scen).p, c = 12, gap = 1, L = 44, h = '<p class="note">' + t("calNote") + "</p>";
+  var W = L + 52 * (c + gap) + 10, Hh = 5 * (7 * (c + gap) + 22) + 10, g = '<svg class="cal" viewBox="0 0 ' + W + " " + Hh + '" width="100%">', cols = ["#F7F2EA", "#F1D9C8", "#E3B394", "#D38C63", "#C06C40", "#9E4524"];
+  var dn = S.lang === "en" ? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] : ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"];
+  for (var y = 0; y < 5; y++) { var y0 = 10 + y * (7 * (c + gap) + 22);
+    g += '<text x="0" y="' + (y0 + 8) + '" font-size="11" font-weight="600" fill="#2B2622">' + t("oy") + (y + 1) + "</text>";
+    for (var r = 0; r < 7; r++) g += '<text x="' + (L - 4) + '" y="' + (y0 + 12 + r * (c + gap) + 9) + '" font-size="8" text-anchor="end" fill="#6f655c">' + dn[(r + (new Date(D.date[0]).getUTCDay() + 6) % 7) % 7] + "</text>";
+    for (var i = 364 * y; i < 364 * (y + 1); i++) { var k = i - 364 * y, wk = Math.floor(k / 7), dw = k % 7, x = L + wk * (c + gap), yy = y0 + 12 + dw * (c + gap);
+      var fill = D.closed[i] ? "#cfc8c0" : cols[Math.min(5, D.rn[i])], st = "";
+      if (D.type[i] === "hol") st = ' stroke="#B8912F" stroke-width="1.5"'; else if (p.women_days === 1 && (D.dow[i] === 2 || D.dow[i] === 3)) st = ' stroke="#4a3aa7" stroke-width="1.2"';
+      g += '<rect class="d" x="' + x + '" y="' + yy + '" width="' + c + '" height="' + c + '" rx="2" fill="' + fill + '"' + st + ' data-day="' + i + '" data-tip="' + esc(fdate(D.date[i]) + " · " + D.type[i] + " · " + D.season[i] + " · " + D.rn[i] + " " + t("rn").toLowerCase() + " · " + money(D.pkgTTC[i] + D.exTTC[i]) + " TTC") + '"/>'; } }
+  g += "</svg>"; h += '<div class="card">' + g + '<div class="legend">'; for (i = 0; i <= 5; i++) h += '<span><i class="sw" style="background:' + cols[i] + '"></i>' + i + "</span>";
+  h += '</div><div id="daydet" class="note">' + (S.day !== null ? dayDetail(S.day) : "") + "</div></div>"; return h; };
+function dayDetail(i) { var D = S.R.days; return "<b>" + fdate(D.date[i]) + "</b> · " + t("oy") + D.oy[i] + " · " + D.type[i] + " / " + D.season[i] + (D.closed[i] ? " · fermé" : "") + " · " + t("occ") + " " + pct(D.occ[i]) + " · " + t("rn") + " " + D.rn[i] + " · " + t("guests") + " " + nf(D.guests[i], 1) + " · " + t("stays") + " " + nf(D.stays[i], 2) +
+  " · " + t("sessions") + " " + D.sessions[i] + " · " + t("pkgTTC") + " " + money(D.pkgTTC[i]) + " · " + t("exTTC") + " " + money(D.exTTC[i]) + " · " + t("lost") + " " + money(D.lostEx[i]) + " · " + t("rec") + " " + money(D.rec[i]) + " · " + t("pays") + " " + money(D.pay[i]); }
+TABFN.dem = function () {
+  var R = S.R, o = R.oy[S.oy - 1], M = monthsOf(R, S.oy), h = oySel(), i, T = S.cur.tables;
+  h += '<div class="grid k8">' + kpi(t("rn"), nf(o.rn), t("occ") + " " + pct(o.occupancy)) + kpi(t("stays"), nf(o.stays), t("alos") + " " + nf(o.rn / (o.stays || 1), 2)) + kpi(t("guests"), nf(o.guests), nf(o.guests / (o.rn || 1), 2) + (S.lang === "en" ? " guests / room" : " clients / chambre")) +
+    kpi(t("acq"), money(o.stays ? (o.mkt + o.fees) / o.stays : 0), "") + "</div>";
+  h += '<div class="card"><h2>' + t("month") + '</h2><table><tr><th></th><th class="n">' + t("rn") + '</th><th class="n">' + t("occ") + '</th><th class="n">' + t("occWd") + '</th><th class="n">' + t("occWe") + '</th><th class="n">' + t("stays") + '</th><th class="n">' + t("guests") + "</th></tr>";
+  for (i = 0; i < M.length; i++) { var m = M[i]; h += "<tr><td>" + mname(m.m) + " " + m.y + '</td><td class="n">' + nf(m.rn) + '</td><td class="n">' + pct(m.rn / m.cap) + '</td><td class="n">' + pct(m.capWd ? m.rnWd / m.capWd : 0) + '</td><td class="n">' + pct(m.capWe ? m.rnWe / m.capWe : 0) + '</td><td class="n">' + nf(m.stays, 1) + '</td><td class="n">' + nf(m.guests) + "</td></tr>"; }
+  h += '<tr class="tot"><td>' + t("total") + '</td><td class="n">' + nf(o.rn) + '</td><td class="n">' + pct(o.occupancy) + '</td><td class="n">' + pct(o.occWd) + '</td><td class="n">' + pct(o.occWe) + '</td><td class="n">' + nf(o.stays, 1) + '</td><td class="n">' + nf(o.guests) + "</td></tr></table></div>";
+  h += '<div class="two"><div class="card"><h2>' + t("segments") + '</h2><table><tr><th></th><th class="n">' + t("rn") + '</th><th class="n">' + t("share") + "</th></tr>";
+  var tot = 0, seg = []; for (i = 0; i < T.segments.length; i++) { var v = o.rnWd * T.segments[i].wd + o.rnWe * T.segments[i].we; seg.push(v); tot += v; }
+  for (i = 0; i < T.segments.length; i++) h += "<tr><td>" + esc(lab(T.segments[i])) + '</td><td class="n">' + nf(seg[i]) + '</td><td class="n">' + pct(tot ? seg[i] / tot : 0) + "</td></tr>";
+  h += '</table><p class="note">' + (S.lang === "en" ? "Segments are informative in this version: they split the modelled room-nights, they do not drive them (see CHANGELOG)." : "Les segments sont informatifs dans cette version : ils répartissent les nuitées modélisées sans les piloter (voir CHANGELOG).") + "</p></div>";
+  h += '<div class="card"><h2>' + t("channels") + '</h2><table><tr><th></th><th class="n">' + t("share") + '</th><th class="n">' + t("commission") + '</th><th class="n">' + t("cost") + " " + t("oy") + S.oy + "</th></tr>";
+  var p = modelOf(S.cur, S.scen).p, gross = o.pkgTTC + o.exTTC;
+  for (i = 0; i < T.channels.length; i++) h += "<tr><td>" + esc(lab(T.channels[i])) + '</td><td class="n">' + pct(T.channels[i].share, 0) + '</td><td class="n">' + pct(T.channels[i].commission, 0) + '</td><td class="n">' + money(gross * T.channels[i].share * T.channels[i].commission) + "</td></tr>";
+  h += "<tr><td>" + (S.lang === "en" ? "Card fees" : "Frais de carte") + '</td><td class="n">' + pct(p.card_share, 0) + '</td><td class="n">' + pct(p.card_fee, 1) + '</td><td class="n">' + money(gross * p.card_share * p.card_fee) + "</td></tr>";
+  h += '<tr class="tot"><td>' + t("fees") + '</td><td></td><td class="n">' + pct(R.blended, 2) + '</td><td class="n">' + money(o.fees) + "</td></tr></table></div></div>";
+  return h; };
+TABFN.rev = function () {
+  var R = S.R, h = oySel(), i, y, T = S.cur.tables, o = R.oy[S.oy - 1];
+  var rowsDef = [["base", function (a) { return a.pkgTTC - a.soloRev - a.suiteRev; }], ["soloSup", function (a) { return a.soloRev; }], ["suiteSup", function (a) { return a.suiteRev; }], ["pkgTTC", function (a) { return a.pkgTTC; }, 1],
+    ["pkgHT", function (a) { return a.pkgHT; }], ["exTTC", function (a) { return a.exTTC; }], ["exHT", function (a) { return a.exHT; }], ["revHT", function (a) { return a.revHT; }, 1], ["lost", function (a) { return a.lostEx; }]];
+  h += '<div class="card"><h2>' + t("t_rev") + " — 5 " + (S.lang === "en" ? "years" : "ans") + '</h2><table class="pl"><tr><th></th>'; for (y = 1; y <= 5; y++) h += '<th class="n">' + t("oy") + y + "</th>"; h += "</tr>";
+  for (i = 0; i < rowsDef.length; i++) { h += "<tr" + (rowsDef[i][2] ? ' class="tot"' : "") + "><td>" + t(rowsDef[i][0]) + "</td>"; for (y = 0; y < 5; y++) h += '<td class="n">' + money(rowsDef[i][1](R.oy[y])) + "</td>"; h += "</tr>"; }
+  h += "<tr><td>" + t("revHT") + " " + t("perRN") + "</td>"; for (y = 0; y < 5; y++) h += '<td class="n">' + money(R.oy[y].rn ? R.oy[y].revHT / R.oy[y].rn : 0) + "</td>";
+  h += "</tr><tr><td>" + t("revHT") + " " + t("perStay") + "</td>"; for (y = 0; y < 5; y++) h += '<td class="n">' + money(R.oy[y].stays ? R.oy[y].revHT / R.oy[y].stays : 0) + "</td>";
+  h += '</tr></table><p class="note">' + (S.lang === "en" ? "Base package is shown net of the launch and length-of-stay discounts. Tourist tax is collected for the municipality and is not revenue." : "Le forfait de base est net des remises de lancement et de long séjour. La taxe de séjour est collectée pour la commune et n'est pas du chiffre d'affaires.") + "</p></div>";
+  h += '<div class="card"><h2>' + t("extras") + " — " + t("oy") + S.oy + '</h2><table><tr><th></th><th class="n">' + t("qty") + '</th><th class="n">' + t("revTTC") + '</th><th class="n">' + t("dcost") + '</th><th class="n">' + t("marg") + '</th><th class="n">%</th><th>' + t("resource") + "</th></tr>";
+  var sq = 0, sr = 0, sc = 0;
+  for (i = 0; i < T.extras.length; i++) { var q = o.exItemsQty[i] || 0, rv = o.exItemsRev[i] || 0, cc = o.exItemsCost[i] || 0; sq += q; sr += rv; sc += cc;
+    h += "<tr><td>" + esc(lab(T.extras[i])) + '</td><td class="n">' + nf(q) + '</td><td class="n">' + money(rv) + '</td><td class="n">' + money(cc) + '</td><td class="n">' + money(rv / (1 + modelOf(S.cur, S.scen).p.vat_extras) - cc) + '</td><td class="n">' + pct(rv ? (rv / (1 + modelOf(S.cur, S.scen).p.vat_extras) - cc) / (rv / (1 + modelOf(S.cur, S.scen).p.vat_extras)) : 0, 0) + "</td><td>" + esc(T.extras[i].resource) + "</td></tr>"; }
+  h += '<tr class="tot"><td>' + t("total") + '</td><td class="n">' + nf(sq) + '</td><td class="n">' + money(sr) + '</td><td class="n">' + money(sc) + '</td><td class="n">' + money(o.exHT - sc) + '</td><td></td><td></td></tr><tr><td>' + t("lost") + '</td><td></td><td class="n">' + money(o.lostEx) + "</td><td colspan=4></td></tr></table></div>";
+  var M = monthsOf(R, S.oy), cats = [], a = [], b = []; for (i = 0; i < M.length; i++) { cats.push(mname(M[i].m)); a.push(M[i].pkgHT); b.push(M[i].exHT); }
+  h += '<div class="card"><h2>' + t("monthlyRev") + "</h2>" + barChart({ cats: cats, series: [{ name: t("pkg"), color: "#B4552F", vals: a }, { name: t("extras"), color: "#2a78d6", vals: b }] }) + "</div>";
+  return h; };
+function payrollSplit(y) { // payroll of OY y by pole + seasonal, from the engine day ledger
+  var R = S.R, D = R.days, p = modelOf(S.cur, S.scen).p, lf = (1 + p.employer_rate) * (1 + p.leave_cover), tt = teamTotals(), out = { poles: {}, seasonal: 0, idxSum: 0 }, i;
+  for (i = 364 * (y - 1); i < 364 * y; i++) if (D.payroll[i] > 0) { var m = +D.date[i].slice(5, 7); out.idxSum += D.idx[i];
+    if (m >= p.seasonal_from && m <= p.seasonal_to) out.seasonal += p.seasonal_monthly * (1 + p.employer_rate) * D.idx[i]; }
+  var P = poleList(); for (i = 0; i < P.length; i++) out.poles[P[i].id] = ((tt[P[i].id] || { g: 0 }).g) * lf * out.idxSum; return out; }
+TABFN.cost = function () {
+  var R = S.R, o = R.oy[S.oy - 1], p = modelOf(S.cur, S.scen).p, D = R.days, h = oySel(), i;
+  var tech = 1 + p.tech_uplift, util = 0, mnt = 0, sw = 0, adm = 0;
+  for (i = 364 * (S.oy - 1); i < 364 * S.oy; i++) if (D.opex[i] > 0) { util += p.utilities_m * tech * D.idx[i]; mnt += p.maintenance_m * tech * D.idx[i]; sw += p.software_m * D.idx[i]; adm += p.admin_m * D.idx[i]; }
+  var V = [[S.lang === "en" ? "Food & beverage" : "Restauration", o.cFb], [S.lang === "en" ? "Guest amenities" : "Produits d'accueil", o.cAmen], [S.lang === "en" ? "Welcome kits" : "Kits d'accueil", o.cKit], [S.lang === "en" ? "Linen per room-night" : "Linge / nuitée", o.cLinenRN],
+    [S.lang === "en" ? "Linen change per stay" : "Linge / séjour", o.cLinenStay], [S.lang === "en" ? "Variable energy" : "Énergie variable", o.cEnergy], [S.lang === "en" ? "Extras direct costs" : "Coûts directs des extras", o.exCost], [t("fees"), o.fees], [t("free"), o.freelance]];
+  var F = [[t("payroll"), o.payroll], [S.lang === "en" ? "Fixed energy & fluids" : "Énergie & fluides fixes", util], [S.lang === "en" ? "Maintenance" : "Maintenance", mnt], [S.lang === "en" ? "Software" : "Logiciels", sw], [S.lang === "en" ? "Accounting, payroll, legal" : "Comptabilité, paie, juridique", adm],
+    [S.lang === "en" ? "Marketing" : "Marketing", o.mkt], [S.lang === "en" ? "Insurance" : "Assurances", o.ins], [S.lang === "en" ? "Local taxes" : "Taxes locales", o.tax], [S.lang === "en" ? "FF&E reserve" : "Réserve FF&E", o.ffe]];
+  function tbl(title, L, tot) { var s = 0, x = '<div class="card"><h2>' + title + '</h2><table><tr><th></th><th class="n">' + t("oy") + S.oy + '</th><th class="n">' + t("perRN") + '</th><th class="n">%</th></tr>';
+    for (var k = 0; k < L.length; k++) { s += L[k][1]; x += "<tr><td>" + L[k][0] + '</td><td class="n">' + money(L[k][1]) + '</td><td class="n">' + money(o.rn ? L[k][1] / o.rn : 0) + '</td><td class="n">' + pct(tot ? L[k][1] / tot : 0, 0) + "</td></tr>"; }
+    return x + '<tr class="tot"><td>' + t("total") + '</td><td class="n">' + money(s) + '</td><td class="n">' + money(o.rn ? s / o.rn : 0) + "</td><td></td></tr></table></div>"; }
+  var tv = o.fees + o.varCost + o.freelance; h += '<div class="two">' + tbl(t("varc"), V, tv) + tbl(t("fixed"), F, o.fixed) + "</div>";
+  var ps = payrollSplit(S.oy), P = poleList(), s2 = 0;
+  h += '<div class="card"><h2>' + t("payroll") + " — " + t("pole") + '</h2><table><tr><th></th><th class="n">' + t("oy") + S.oy + "</th></tr>";
+  for (i = 0; i < P.length; i++) { s2 += ps.poles[P[i].id]; h += "<tr><td>" + esc(lab(P[i])) + '</td><td class="n">' + money(ps.poles[P[i].id]) + "</td></tr>"; }
+  s2 += ps.seasonal; h += "<tr><td>" + t("seasonal") + '</td><td class="n">' + money(ps.seasonal) + '</td></tr><tr class="tot"><td>' + t("total") + '</td><td class="n">' + money(s2) + "</td></tr><tr><td>" + t("reconc") + '</td><td class="n">' + (Math.abs(s2 - o.payroll) < 1 ? "✓ " : "⚠ ") + money(o.payroll) + "</td></tr></table></div>";
+  return h; };
+TABFN.team = function () {
+  var R = S.R, o = R.oy[S.oy - 1], p = modelOf(S.cur, S.scen).p, tt = teamTotals(), h = oySel(), P = poleList(), i;
+  var freeS = o.sessions - o.leadSessions;
+  h += '<div class="grid k8">' + kpi(t("sessions"), nf(o.sessions), nf(o.sessions / Math.max(1, o.openDays), 1) + " / " + (S.lang === "en" ? "day" : "jour")) + kpi(t("leadS"), nf(o.leadSessions), pct(o.sessions ? o.leadSessions / o.sessions : 0)) +
+    kpi(t("freeS"), nf(freeS), money(o.freelance)) + kpi(t("dep"), pct(o.sessions ? o.leadSessions / o.sessions : 0), "", o.sessions && o.leadSessions / o.sessions > 0.5) +
+    kpi(t("therapist"), nf(p.treatment_slots_day), t("maxDem") + " " + nf(o.maxTherDemand, 1)) + kpi(t("bindT"), nf(o.daysTherBind), t("bindV") + " " + nf(o.daysVehBind)) +
+    kpi(t("lost"), money(o.lostEx), "") + kpi(t("hoursRN"), nf(o.rn ? tt.all.fte * 191 * 12 / o.rn : 0, 1), nf(tt.all.fte, 1) + " " + t("fte") + " × 191 h / " + (S.lang === "en" ? "month" : "mois")) + "</div>";
+  h += '<div class="card"><h2>' + t("team") + '</h2><table><tr><th></th><th class="n">' + t("fte") + '</th><th class="n">' + t("grossM") + '</th><th class="n">' + t("loadedM") + "</th></tr>";
+  for (i = 0; i < P.length; i++) { var s = tt[P[i].id] || { fte: 0, g: 0 }; h += "<tr><td>" + esc(lab(P[i])) + '</td><td class="n">' + nf(s.fte, 1) + '</td><td class="n">' + money(s.g) + '</td><td class="n">' + money(s.g * tt.f) + "</td></tr>"; }
+  h += '<tr class="tot"><td>' + t("total") + '</td><td class="n">' + nf(tt.all.fte, 1) + '</td><td class="n">' + money(tt.all.g) + '</td><td class="n">' + money(tt.all.g * tt.f) + '</td></tr></table><p class="note">' + t("noCov") + "</p></div>";
+  return h; };
+TABFN.cash = function () {
+  var R = S.R, W = R.weeks, y = S.oy, h = oySel(), i, buf = modelOf(S.cur, S.scen).p.cash_buffer, vals = [], bl = [], sub = [];
+  for (i = 52 * (y - 1); i < 52 * y; i++) { sub.push(W[i]); vals.push(W[i].close); bl.push(buf); }
+  h += '<div class="card"><h2>' + t("cashCurve") + " — " + t("oy") + y + "</h2>" + lineChart({ series: [{ name: t("close"), color: "#2B2622", vals: vals }, { name: t("buffer"), color: "#B8912F", vals: bl, dash: 1 }], tip: function (k) { return t("week") + " " + sub[k].week + " · " + money(sub[k].close); } }) + "</div>";
+  h += '<div class="card"><div class="scroll"><table><tr><th>' + t("week") + "</th><th>" + t("date") + '</th><th class="n">' + t("rec") + '</th><th class="n">' + t("depRec") + '</th><th class="n">' + t("varc") + '</th><th class="n">' + t("payroll") + '</th><th class="n">' + t("fixed") + '</th><th class="n">Marketing</th><th class="n">' + t("vat") + '</th><th class="n">' + t("debt") + '</th><th class="n">' + t("capex") + '</th><th class="n">' + t("is") + '</th><th class="n">' + t("netw") + '</th><th class="n">' + t("close") + "</th></tr>";
+  for (i = 0; i < sub.length; i++) { var w = sub[i]; h += "<tr" + (w.close < buf ? ' class="low"' : "") + "><td>" + w.week + (w.week === 1 ? ' <span class="pill">' + (S.lang === "en" ? "pre-opening incl." : "pré-ouverture incl.") + "</span>" : "") + "</td><td>" + fdate(w.start) + '</td><td class="n">' + nf(w.rec) + '</td><td class="n">' + nf(w.depRec) + '</td><td class="n">' + nf(w.fees + w.varCost + w.freelance) + '</td><td class="n">' + nf(w.payroll) +
+    '</td><td class="n">' + nf(w.fixed) + '</td><td class="n">' + nf(w.mkt) + '</td><td class="n">' + nf(w.vatPay) + '</td><td class="n">' + nf(w.debt) + '</td><td class="n">' + nf(w.capex) + '</td><td class="n">' + nf(w.isPay) + '</td><td class="n' + cls(w.net) + '">' + nf(w.net) + '</td><td class="n' + cls(w.close) + '">' + nf(w.close) + "</td></tr>"; }
+  return h + "</table></div></div>"; };
+TABFN.proj = function () {
+  var R = S.R, O = R.oy, y, i, h = "";
+  var L = [["rn", "rn", 0], ["occ", "occupancy", 2], ["pkgHT", "pkgHT"], ["exHT", "exHT"], ["revHT", "revHT", 1], ["fees", "fees", 0, -1], ["varc", "varCost", 0, -1], ["free", "freelance", 0, -1], ["contrib", "contribution", 1],
+    ["payroll", "payroll", 0, -1], ["fixedOther", null], ["ebitda", "ebitda", 1], ["dep2", "depreciation", 0, -1], ["interest", "interest", 0, -1], ["ebt", "ebt", 1], ["is", "is", 0, -1], ["net", "net", 1],
+    ["sep", null], ["rec", "rec"], ["capex", "capex"], ["principal", "principal"], ["debtServ", "debtService"], ["dscr", "dscr", 3], ["lowCash", "lowCash"], ["closeCash", "closeCash", 1], ["weeksBelow", "weeksBelow", 4]];
+  var lbl = { fixedOther: S.lang === "en" ? "Other fixed costs (opex, marketing, insurance, taxes, FF&E)" : "Autres charges fixes (fonctionnement, marketing, assurances, taxes, FF&E)", dep2: S.lang === "en" ? "Depreciation" : "Amortissements", ebt: S.lang === "en" ? "Result before tax" : "Résultat avant impôt", weeksBelow: t("weeksBelow") };
+  h += '<div class="card"><h2>' + t("t_proj") + " — " + t("oyl") + '</h2><table class="pl"><tr><th></th>'; for (y = 1; y <= 5; y++) h += '<th class="n">' + t("oy") + y + "</th>"; h += '<th class="n">' + t("total") + "</th></tr>";
+  for (i = 0; i < L.length; i++) { var d = L[i]; if (d[0] === "sep") { h += '<tr class="sep"><td colspan="7"></td></tr>'; continue; }
+    h += "<tr" + (d[2] === 1 ? ' class="tot"' : "") + "><td>" + (lbl[d[0]] || t(d[0])) + "</td>"; var s = 0;
+    for (y = 0; y < 5; y++) { var v = d[1] ? O[y][d[1]] : O[y].fixed - O[y].payroll; if (d[3]) v = -v; s += v || 0;
+      h += '<td class="n' + cls(v) + '">' + (d[2] === 2 ? pct(v) : d[2] === 3 ? (v === null ? "–" : nf(v, 2)) : d[2] === 4 ? nf(v) : nf(v)) + "</td>"; }
+    h += '<td class="n' + cls(s) + '">' + (d[2] >= 2 || d[1] === "closeCash" || d[1] === "lowCash" ? "" : nf(s)) + "</td></tr>"; }
+  h += '</table><p class="note">' + (S.lang === "en" ? "Fixed costs are booked on their payment dates. IS with loss carry-forward, paid in one instalment 90 days after year end (simplified)." : "Charges fixes comptées à leur date de paiement. IS avec report des déficits, payé en une fois 90 jours après la clôture (simplifié).") + "</p></div>";
+  h += '<div class="two"><div class="card"><h2>' + t("cy") + '</h2><table><tr><th></th><th class="n">' + t("days") + '</th><th class="n">' + t("revHT") + '</th><th class="n">EBITDA</th><th class="n">' + t("debtServ") + '</th><th class="n">' + t("closeCash") + "</th></tr>";
+  for (i = 0; i < R.cy.length; i++) { var c = R.cy[i]; h += "<tr><td>" + c.year + '</td><td class="n">' + c.days + '</td><td class="n">' + nf(c.revHT) + '</td><td class="n' + cls(c.ebitda) + '">' + nf(c.ebitda) + '</td><td class="n">' + nf(c.debtService) + '</td><td class="n' + cls(c.closeCash) + '">' + nf(c.closeCash) + "</td></tr>"; }
+  h += '</table></div><div class="card"><h2>' + t("sched") + '</h2><table><tr><th>' + t("date") + '</th><th class="n">' + t("interest") + '</th><th class="n">' + t("principal") + "</th></tr>";
+  for (i = 0; i < R.debt.length; i++) { var e = R.debt[i]; h += "<tr><td>" + fdate(NurEngine.iso(e.date)) + (e.dayIndex < 0 ? ' <span class="pill">' + (S.lang === "en" ? "before opening" : "avant ouverture") + "</span>" : "") + '</td><td class="n">' + nf(e.interest) + '</td><td class="n">' + nf(e.principal) + "</td></tr>"; }
+  h += '</table><p class="note">' + (S.lang === "en" ? "Instalments falling before the opening date are outside the 5-year horizon and are not in the cash ledger." : "Les échéances antérieures à l'ouverture sont hors horizon et ne figurent pas dans la trésorerie.") + "</p></div></div>";
+  return h; };
+TXT.interest = TXT.interest; TXT.ebt = ["Résultat avant impôt", "Result before tax"];
+
+/* Comparison, scenarios & sensitivities, events, exports, init */
+TABFN.cmp = function () {
+  var R = S.R, h = '<p class="note">' + t("cmpNote") + "</p>", i;
+  h += '<div class="card"><h2>' + t("t_cmp") + '</h2><table><tr><th></th><th class="n">' + t("revHT") + ' v1</th><th class="n">' + t("revHT") + ' v2</th><th class="n">EBITDA v1</th><th class="n">EBITDA v2</th><th class="n">' + t("net") + ' v1</th><th class="n">' + t("net") + ' v2</th><th class="n">' + t("closeCash") + ' v1</th><th class="n">' + t("closeCash") + ' v2</th><th class="n">DSCR v1</th><th class="n">DSCR v2</th></tr>';
+  for (i = 0; i < 5; i++) { var a = V1_BANK[i], b = R.oy[i];
+    h += "<tr><td>" + a.y + " / " + t("oy") + (i + 1) + '</td><td class="n">' + nf(a.rev) + '</td><td class="n">' + nf(b.revHT) + '</td><td class="n">' + nf(a.ebitda) + '</td><td class="n' + cls(b.ebitda) + '">' + nf(b.ebitda) + '</td><td class="n">' + nf(a.net) + '</td><td class="n' + cls(b.net) + '">' + nf(b.net) +
+      '</td><td class="n">' + nf(a.cash) + '</td><td class="n' + cls(b.closeCash) + '">' + nf(b.closeCash) + '</td><td class="n">' + nf(a.dscr, 2) + '</td><td class="n">' + (b.dscr === null ? "–" : nf(b.dscr, 2)) + "</td></tr>"; }
+  h += '</table></div><div class="two"><div class="card"><h2>' + t("cy") + ' (v2)</h2><table><tr><th></th><th class="n">' + t("revHT") + ' v1</th><th class="n">' + t("revHT") + ' v2</th><th class="n">EBITDA v1</th><th class="n">EBITDA v2</th></tr>';
+  for (i = 0; i < R.cy.length; i++) { var c = R.cy[i], v1 = null; for (var k = 0; k < V1_BANK.length; k++) if (V1_BANK[k].y === c.year) v1 = V1_BANK[k];
+    h += "<tr><td>" + c.year + " (" + c.days + " " + t("days").toLowerCase() + ')</td><td class="n">' + (v1 ? nf(v1.rev) : "–") + '</td><td class="n">' + nf(c.revHT) + '</td><td class="n">' + (v1 ? nf(v1.ebitda) : "–") + '</td><td class="n' + cls(c.ebitda) + '">' + nf(c.ebitda) + "</td></tr>"; }
+  var o3 = R.oy[2], wk = NurEngine.compute(modelOf(S.cur, "wdweak")).oy[2];
+  h += '</table></div><div class="card"><h2>' + (S.lang === "en" ? "Robustness (v2, OY3)" : "Robustesse (v2, AE3)") + "</h2><table>" +
+    "<tr><td>" + t("fixed") + '</td><td class="n">' + money(o3.fixed) + "</td></tr><tr><td>" + t("acq") + '</td><td class="n">' + money(o3.stays ? (o3.mkt + o3.fees) / o3.stays : 0) + "</td></tr>" +
+    "<tr><td>" + (S.lang === "en" ? "Total cost per stay" : "Coût complet par séjour") + '</td><td class="n">' + money(o3.stays ? (o3.revHT - o3.ebitda) / o3.stays : 0) + "</td></tr><tr><td>" + t("dep") + '</td><td class="n">' + pct(o3.sessions ? o3.leadSessions / o3.sessions : 0) + "</td></tr>" +
+    "<tr><td>" + (S.lang === "en" ? "OY3 EBITDA if weekdays × 0.6" : "EBITDA AE3 si semaine × 0,6") + '</td><td class="n' + cls(wk.ebitda) + '">' + money(wk.ebitda) + "</td></tr><tr><td>" + (S.lang === "en" ? "Foregone VVIP rental (v1)" : "Location VVIP abandonnée (v1)") + '</td><td class="n muted">' + (S.lang === "en" ? "see v1 Sheet" : "voir Sheet v1") + "</td></tr></table></div></div>";
+  h += '<div class="card inv-hide"><h2>v1 — ' + V1_BASE.note + '</h2><p class="note">' + t("revHT") + " " + money(V1_BASE.rev) + " · EBITDA " + money(V1_BASE.ebitda) + " · " + t("net") + " " + money(V1_BASE.net) + " · " + t("closeCash") + " " + money(V1_BASE.cash) +
+    '</p><button class="btn l" data-act="v1live">' + t("v1live") + '</button> <span class="note" id="v1out">' + (S.v1live || "") + "</span></div>";
+  return h; };
+function readV1() { var e = $("v1out"); if (e) e.innerHTML = "…";
+  fetch(V1_URL + "?action=hypotheses").then(function (r) { return r.json(); }).then(function (d) {
+    var n = d.pairs ? d.pairs.length : (d.hypotheses ? Object.keys(d.hypotheses).length : 0), k = d.kpis || {}, s = "✓ v1 " + (d.version !== undefined ? "version " + esc(d.version) : "") + " · " + n + " " + t("vals");
+    for (var x in k) if (typeof k[x] === "number") s += " · " + esc(x) + " " + nf(k[x]);
+    S.v1live = s; if ($("v1out")) $("v1out").innerHTML = s; }).catch(function (er) { S.v1live = "⚠ " + esc(er.message || er); if ($("v1out")) $("v1out").innerHTML = S.v1live; }); }
+
+TABFN.scen = function () { return '<div id="scenbody"><p class="note">' + t("computing") + "</p></div>"; };
+function scenKey() { return JSON.stringify(S.cur) + S.lang; }
+function fillScen() {
+  var el = $("scenbody"); if (!el) return;
+  if (S.scenCache && S.scenCache.k === scenKey()) { el.innerHTML = S.scenCache.h; return; }
+  var h = "", i, j, base = S.cur;
+  function run(sid, extra) { return NurEngine.compute(modelOf(base, sid, extra)); }
+  h += '<div class="card"><h2>' + t("scenTable") + '</h2><table><tr><th></th><th class="n">' + t("revHT") + " " + t("oy") + '1</th><th class="n">EBITDA ' + t("oy") + '1</th><th class="n">' + t("occ") + " " + t("oy") + '3</th><th class="n">EBITDA ' + t("oy") + '3</th><th class="n">' + t("be") + " " + t("oy") + '3</th><th class="n">' + t("lowCash") + '</th><th class="n">' + t("closeCash") + " " + t("oy") + "5</th></tr>";
+  for (i = 0; i < SCEN.length; i++) { var R = run(SCEN[i].id), a = R.oy[0], c = R.oy[2];
+    h += "<tr" + (SCEN[i].id === "base" ? ' class="tot"' : "") + "><td>" + esc(SCEN[i][S.lang]) + '<div class="note">' + esc(SCEN[i]["d_" + S.lang]) + '</div></td><td class="n">' + nf(a.revHT) + '</td><td class="n' + cls(a.ebitda) + '">' + nf(a.ebitda) + '</td><td class="n">' + pct(c.occupancy) + '</td><td class="n' + cls(c.ebitda) + '">' + nf(c.ebitda) +
+      '</td><td class="n">' + pct(c.breakEvenOcc, 0) + '</td><td class="n' + cls(R.controls.low_cash) + '">' + nf(R.controls.low_cash) + '</td><td class="n' + cls(R.controls.close_cash) + '">' + nf(R.controls.close_cash) + "</td></tr>"; }
+  h += "</table></div>";
+  // service promise
+  var p = modelOf(base, "base").p, B = run("base").oy[0], gpr = 2, pp = p.price_weekday_pp;
+  function day(rooms) { var g = rooms * gpr, st = rooms / p.alos_weekday, rev = rooms * 2 * pp, revHT = rev / (1 + p.vat_package), fees = rev * run0blend,
+      v = g * (p.fb_guest_night + p.amenities_guest_night) + st * gpr * p.welcome_kit + rooms * (p.linen_room_night + p.energy_room_night) + st * p.linen_stay, sess = p.sessions_per_day * p.freelance_fee, fx = B.fixed / 364;
+    return { rooms: rooms, g: g, rev: rev, revHT: revHT, fees: fees, v: v, sess: sess, fx: fx, m: revHT - fees - v - sess - fx }; }
+  var run0blend = NurEngine.compute(modelOf(base, "base")).blended, d1 = day(1), d5 = day(5), rows = [["revHT", "revHT"], ["fees", "fees"], ["varc", "v"], ["sessions", "sess"], ["fixed", "fx"]];
+  h += '<div class="two"><div class="card"><h2>' + t("promise") + '</h2><table><tr><th></th><th class="n">1 ' + (S.lang === "en" ? "room" : "chambre") + " (2)</th><th class=\"n\">5 " + (S.lang === "en" ? "rooms" : "chambres") + " (10)</th></tr>";
+  for (i = 0; i < rows.length; i++) h += "<tr><td>" + t(rows[i][0]) + '</td><td class="n">' + money((i ? -1 : 1) * d1[rows[i][1]]) + '</td><td class="n">' + money((i ? -1 : 1) * d5[rows[i][1]]) + "</td></tr>";
+  h += '<tr class="tot"><td>' + (S.lang === "en" ? "Day result" : "Résultat de la journée") + '</td><td class="n' + cls(d1.m) + '">' + money(d1.m) + '</td><td class="n' + cls(d5.m) + '">' + money(d5.m) + '</td></tr></table><p class="note">' +
+    (S.lang === "en" ? "Weekday, mid season, OY1 prices, no discount. The 3 included sessions run from the first guest: shown at the freelance rate (upper bound). Fixed costs = OY1 fixed ÷ 364." : "Jour de semaine, moyenne saison, prix AE1, sans remise. Les 3 séances incluses ont lieu dès le premier client : valorisées au tarif freelance (majorant). Charges fixes = charges fixes AE1 ÷ 364.") + "</p></div>";
+  // tornado
+  var ref = run("base").oy[2].ebitda, TOR = [["occ_weekday", t("occ") + " " + t("occWd")], ["occ_weekend", t("occ") + " " + t("occWe")], ["price_weekday_pp", t("price") + " " + t("occWd")], ["price_weekend_pp", t("price") + " " + t("occWe")],
+    ["fb_guest_night", S.lang === "en" ? "F&B per guest-night" : "Restauration / nuitée"], ["marketing_y", "Marketing"], ["utilities_m", S.lang === "en" ? "Fixed energy" : "Énergie fixe"], ["_payroll", t("payroll")], ["_attach", S.lang === "en" ? "Extras take-up" : "Taux de prise des extras"]], tor = [];
+  for (i = 0; i < TOR.length; i++) { var key = TOR[i][0], res = [];
+    for (j = 0; j < 2; j++) { var f = j ? 1.1 : 0.9; res.push(run("base", function (m) { var k2;
+      if (key === "_payroll") { for (k2 = 0; k2 < m.t.roster.length; k2++) m.t.roster[k2].gross *= f; } else if (key === "_attach") { for (k2 = 0; k2 < m.t.extras.length; k2++) m.t.extras[k2].attach *= f; } else m.p[key] *= f; }).oy[2].ebitda); }
+    tor.push({ l: TOR[i][1], lo: res[0], hi: res[1], span: Math.abs(res[1] - res[0]) }); }
+  tor.sort(function (a, b) { return b.span - a.span; });
+  var mn = ref, mx = ref; for (i = 0; i < tor.length; i++) { mn = Math.min(mn, tor[i].lo, tor[i].hi); mx = Math.max(mx, tor[i].lo, tor[i].hi); }
+  var W = 560, L = 170, X = function (v) { return L + (W - L - 10) * (v - mn) / ((mx - mn) || 1); }, g = '<svg viewBox="0 0 ' + W + " " + (tor.length * 26 + 30) + '" width="100%">';
+  for (i = 0; i < tor.length; i++) { var y = 10 + i * 26, a1 = Math.min(tor[i].lo, tor[i].hi), a2 = Math.max(tor[i].lo, tor[i].hi);
+    g += '<text x="' + (L - 6) + '" y="' + (y + 13) + '" font-size="10" text-anchor="end" fill="#2B2622">' + esc(tor[i].l) + '</text><rect x="' + X(a1) + '" y="' + y + '" width="' + Math.max(1, X(a2) - X(a1)) + '" height="18" fill="#4a3aa7" opacity=".8" data-tip="' + esc(tor[i].l + " −10 % : " + money(tor[i].lo) + " · +10 % : " + money(tor[i].hi)) + '"/>'; }
+  g += '<line x1="' + X(ref) + '" x2="' + X(ref) + '" y1="4" y2="' + (tor.length * 26 + 12) + '" stroke="#B4552F" stroke-dasharray="4,3"/><text x="' + X(ref) + '" y="' + (tor.length * 26 + 26) + '" font-size="10" text-anchor="middle" fill="#B4552F">Base ' + kmad(ref) + "</text></svg>";
+  h += '<div class="card"><h2>' + t("tornado") + "</h2>" + g + "</div></div>";
+  // sensitivity 1
+  var occs = [0.15, 0.2, 0.3, 0.4, 0.5], sets = [["brief", null], ["A", 2500], ["B", 3000], ["C", 3600]];
+  h += '<div class="card"><h2>' + t("sens1") + '</h2><table class="heat"><tr><th>' + t("occ") + " " + t("occWd") + "</th>"; for (j = 0; j < sets.length; j++) h += "<th>" + (j ? t("priceSet") + " " + sets[j][0] : t("brief") + " (" + nf(p.price_weekday_pp) + " / " + nf(p.price_weekend_pp) + ")") + "</th>"; h += "</tr>";
+  for (i = 0; i < occs.length; i++) { h += "<tr><td><b>" + pct(occs[i], 0) + "</b></td>";
+    for (j = 0; j < sets.length; j++) { var oc = occs[i], pr = sets[j][1], Rr = run("base", function (m) { m.p.occ_weekday = oc; if (pr) { m.p.price_weekday_pp = pr; m.p.price_weekend_pp = pr; } });
+      var e3 = Rr.oy[2].ebitda; h += '<td style="background:' + (e3 >= 0 ? "#e3efe7" : "#fbe3e0") + '"><b>' + kmad(e3) + "</b><br>" + kmad(Rr.controls.low_cash) + "</td>"; }
+    h += "</tr>"; }
+  h += '</table><p class="note">' + (S.lang === "en" ? "Cell: OY3 EBITDA (bold) / cash low point over 5 years." : "Cellule : EBITDA AE3 (gras) / point bas de trésorerie sur 5 ans.") + "</p></div>";
+  // sensitivity 2
+  var wes = [0.6, 0.7, 0.8, 0.9], teams = [[S.lang === "en" ? "Lean (−1 reception, −1 housekeeping)" : "Allégée (−1 accueil, −1 housekeeping)", -1], [S.lang === "en" ? "Core roster" : "Équipe de base", 0], [S.lang === "en" ? "Reinforced (+1 reception 6,500)" : "Renforcée (+1 accueil 6 500)", 1]];
+  h += '<div class="card"><h2>' + t("sens2") + '</h2><table class="heat"><tr><th>' + t("occ") + " " + t("occWe") + "</th>"; for (j = 0; j < teams.length; j++) h += "<th>" + teams[j][0] + "</th>"; h += "</tr>";
+  for (i = 0; i < wes.length; i++) { h += "<tr><td><b>" + pct(wes[i], 0) + "</b></td>";
+    for (j = 0; j < teams.length; j++) { var ow = wes[i], tv = teams[j][1], R2 = run("base", function (m) { m.p.occ_weekend = ow; var ro = m.t.roster, k3;
+        if (tv < 0) { for (k3 = 0; k3 < ro.length; k3++) if ((ro[k3].pole === "dir" || ro[k3].pole === "hk") && ro[k3].fte >= 2) ro[k3].fte -= 1; }
+        if (tv > 0) ro.push({ pole: "dir", label_fr: "+1", label_en: "+1", fte: 1, gross: 6500 }); });
+      h += '<td style="background:' + (R2.oy[2].ebitda >= 0 ? "#e3efe7" : "#fbe3e0") + '"><b>' + kmad(R2.oy[2].ebitda) + "</b></td>"; }
+    h += "</tr>"; }
+  h += "</table></div>";
+  S.scenCache = { k: scenKey(), h: h }; el.innerHTML = h; }
+
+/* ---------------- events ---------------- */
+function parseNum(s) { return +String(s).replace(/\s| /g, "").replace(",", "."); }
+function onChange(e) {
+  var el = e.target, d = el.getAttribute ? el : null; if (!d) return;
+  if (el.id === "ep") { S.ep = el.value.trim(); lsSet("ep", S.ep); return; }
+  var k = el.getAttribute("data-k"), l = el.getAttribute("data-l"), tb = el.getAttribute("data-t");
+  if (k) { var r = rowByKey(k); if (!r) return;
+    if (r.unit === "date") r.value = el.value; else if (r.unit === "0/1") r.value = el.checked ? 1 : 0;
+    else { var v = parseNum(el.value); if (isNaN(v)) { el.value = dispVal(r); return; } r.value = r.unit === "%" ? Math.round(v * 1e6) / 1e8 : v; } }
+  else if (l) { var r2 = rowByKey(l); if (r2) r2["label_" + S.lang] = el.value; }
+  else if (tb) { var i = +el.getAttribute("data-i"), c = el.getAttribute("data-c"), row = S.cur.tables[tb][i];
+    if (c.indexOf("label_") === 0 || c === "resource") row[c] = el.value; else { var v2 = parseNum(el.value); if (isNaN(v2)) return; row[c] = el.getAttribute("data-p") ? Math.round(v2 * 1e6) / 1e8 : v2; } }
+  else return;
+  recompute(); saveLocal();
+  if (S.tab === "hyp") { updateHypLive(); if (el.className.indexOf("chg") < 0 && el.type !== "checkbox") el.className += " chg"; if (tb === "segments" || tb === "channels" || tb === "poles") renderMain(); }
+  else render(); }
+function onClick(e) {
+  var el = e.target; while (el && el !== document.body && !(el.getAttribute && (el.getAttribute("data-act") || el.getAttribute("data-tab") || el.getAttribute("data-scen") || el.getAttribute("data-oy") || el.getAttribute("data-sub") || el.getAttribute("data-grp") || el.getAttribute("data-pset") || el.getAttribute("data-day")))) el = el.parentNode;
+  if (!el || el === document.body || !el.getAttribute) return;
+  if (el.tagName === "INPUT") return;
+  var a = el.getAttribute("data-act"), v;
+  if ((v = el.getAttribute("data-tab"))) { S.tab = v; setHash(); render(); window.scrollTo(0, 0); return; }
+  if ((v = el.getAttribute("data-scen"))) { S.scen = v; recompute(); render(); return; }
+  if ((v = el.getAttribute("data-oy"))) { S.oy = +v; render(); return; }
+  if ((v = el.getAttribute("data-sub"))) { S.sub = v; setHash(); renderMain(); return; }
+  if ((v = el.getAttribute("data-day"))) { S.day = +v; var dd = $("daydet"); if (dd) dd.innerHTML = dayDetail(S.day); return; }
+  if ((v = el.getAttribute("data-grp"))) { if (e.target.tagName === "INPUT") return; S.open[v] = S.open[v] === false; saveLocal(); renderMain(); return; }
+  if ((v = el.getAttribute("data-pset"))) { var ref = refPayload(), pv = { A: 2500, B: 3000, C: 3600 }[v], i;
+    for (i = 0; i < ref.rows.length; i++) if (ref.rows[i].key === "price_weekday_pp" || ref.rows[i].key === "price_weekend_pp") rowByKey(ref.rows[i].key).value = pv || ref.rows[i].value;
+    recompute(); render(); return; }
+  if (a === "lang") { S.lang = S.lang === "fr" ? "en" : "fr"; render(); }
+  else if (a === "investor") { S.investor = !S.investor; if (S.investor) { S.scen = "base"; S.editLabels = false; initCur(refPayload()); recompute(); } render(); }
+  else if (a === "print") printAll();
+  else if (a === "json") exportJSON();
+  else if (a === "csv") exportCSV();
+  else if (a === "sync") syncSheet(true);
+  else if (a === "labels") { S.editLabels = !S.editLabels; renderMain(); }
+  else if (a === "publish") publish();
+  else if (a === "reset") { initCur(refPayload()); recompute(); render(); }
+  else if (a === "expand" || a === "collapse") { var P = poleList(); for (var j = 0; j < P.length; j++) S.open[P[j].id] = a === "expand"; saveLocal(); renderMain(); }
+  else if (a === "addfree") { var R = S.cur.tables.roster, n = 0; for (var q = 0; q < R.length; q++) if (R[q].pole === "free") n++;
+    if (R.length >= 40) return; R.push({ pole: "free", label_fr: "Poste libre " + (n + 1), label_en: "Free position " + (n + 1), fte: 0, gross: 0 }); S.open.free = true; recompute(); renderMain(); updateHypLive(); }
+  else if (a === "v1live") readV1(); }
+function setHash() { try { history.replaceState(null, "", "#" + S.tab + (S.tab === "hyp" ? "/" + S.sub : "")); } catch (e) { } }
+function readHash() { var h = (location.hash || "").replace("#", "").split("/"); if (h[0] && TABFN[h[0]]) S.tab = h[0]; if (h[1] === "ca" || h[1] === "ch") S.sub = h[1]; }
+function tipMove(e) { var tp = $("tip"), el = e.target, s = el && el.getAttribute ? el.getAttribute("data-tip") : null;
+  if (!s) { tp.style.display = "none"; return; } tp.innerHTML = esc(s); tp.style.display = "block";
+  tp.style.left = Math.min(window.innerWidth - 270, e.clientX + 12) + "px"; tp.style.top = (e.clientY + 12) + "px"; }
+function download(name, text, type) { try { var b = new Blob([text], { type: type }), a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); setTimeout(function () { document.body.removeChild(a); }, 100); } catch (e) { } }
+function stamp() { var d = new Date(), p = function (n) { return (n < 10 ? "0" : "") + n; }; return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "_" + p(d.getHours()) + "h" + p(d.getMinutes()); }
+function exportJSON() { download("Nur_v2_hypotheses_" + stamp() + ".json", JSON.stringify({ app: APP_VERSION, scenario: S.scen, sheetVersion: S.sheet ? S.sheet.version : null, rows: S.cur.rows, tables: S.cur.tables, controls: S.R.controls }, null, 1), "application/json"); }
+function exportCSV() { var W = S.R.weeks, L = ["week;start;oy;room_nights;receipts;deposits;payroll;payments;net;closing"];
+  for (var i = 0; i < W.length; i++) L.push([W[i].week, W[i].start, W[i].oy, W[i].rn, W[i].rec.toFixed(2), W[i].depRec.toFixed(2), W[i].payroll.toFixed(2), W[i].pay.toFixed(2), W[i].net.toFixed(2), W[i].close.toFixed(2)].join(";"));
+  L.push(""); L.push("oy;revHT;ebitda;net;occupancy;closeCash;dscr");
+  for (i = 0; i < 5; i++) { var o = S.R.oy[i]; L.push([o.oy, o.revHT.toFixed(2), o.ebitda.toFixed(2), o.net.toFixed(2), o.occupancy.toFixed(4), o.closeCash.toFixed(2), o.dscr === null ? "" : o.dscr.toFixed(3)].join(";")); }
+  download("Nur_v2_cash_" + S.scen + "_" + stamp() + ".csv", "﻿" + L.join("\n"), "text/csv"); }
+function printAll() { var keep = S.tab, h = "", op = S.sub; renderChrome();
+  for (var i = 0; i < TABS.length; i++) { S.tab = TABS[i];
+    if (TABS[i] === "hyp") { S.sub = "ca"; h += '<section class="sec"><h2>' + t("t_hyp") + " — " + t("p_ca") + "</h2>" + TABFN.hyp() + '</section><section class="sec"><h2>' + t("t_hyp") + " — " + t("p_ch") + "</h2>"; S.sub = "ch"; h += TABFN.hyp() + "</section>"; continue; }
+    if (TABS[i] === "scen") { fillScenHidden(); h += '<section class="sec"><h2>' + t("t_scen") + "</h2>" + (S.scenCache ? S.scenCache.h : "") + "</section>"; continue; }
+    h += '<section class="sec"><h2>' + t("t_" + TABS[i]) + "</h2>" + TABFN[TABS[i]]() + "</section>"; }
+  S.tab = keep; S.sub = op; $("main").innerHTML = h; setTimeout(function () { window.print(); renderMain(); }, 60); }
+function fillScenHidden() { if (S.scenCache && S.scenCache.k === scenKey()) return; var d = document.createElement("div"); d.id = "scenbody"; d.style.display = "none"; document.body.appendChild(d); fillScen(); document.body.removeChild(d); }
+
+function init() {
+  var st = lsGet("state"), cached = lsGet("sheet"); S.ep = lsGet("ep") || (DEFAULT_EP.indexOf("__") === 0 ? "" : DEFAULT_EP);
+  if (st) { S.lang = st.lang || "fr"; S.tab = st.tab || "dash"; S.sub = st.sub || "ca"; S.oy = st.oy || 1; S.scen = st.scen || "base"; S.investor = !!st.investor; S.open = st.open || {}; }
+  readHash();
+  if (cached && cached.rows && S.ep) { S.sheet = cached; S.sheetAt = cached._at; S.fromCache = true; }
+  checkIntegrity();
+  initCur(refPayload());
+  if (st && st.cur && st.cur.rows && st.curRef === (S.sheet ? S.sheet.version : "local:" + BASE.version) && st.cur.rows.length === refPayload().rows.length) S.cur = st.cur; // keep the viewer's sandbox
+  recompute(); render();
+  document.addEventListener("change", onChange); document.addEventListener("click", onClick); document.addEventListener("mousemove", tipMove);
+  window.addEventListener("hashchange", function () { readHash(); render(); });
+  if (S.ep) syncSheet(false); }
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+
+</script>
+</body></html>
